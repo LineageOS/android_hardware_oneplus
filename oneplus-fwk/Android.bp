@@ -1,0 +1,8 @@
+java_library {
+    name: "oneplus-fwk",
+    installable: true,
+
+    srcs: [
+        "src/**/*.java",
+    ],
+}
