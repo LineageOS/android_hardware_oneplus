@@ -13,4 +13,14 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },
+
+    required: ["org.lineageos.pocketmode_whitelist"],
+}
+
+prebuilt_etc {
+    name: "org.lineageos.pocketmode_whitelist",
+    system_ext_specific: true,
+    sub_dir: "sysconfig",
+    src: "org.lineageos.pocketmode_whitelist.xml",
+    filename_from_src: true,
 }
