@@ -1,0 +1,7 @@
+package vendor.oneplus.hardware.drmkey@1.0;
+
+interface IOneplusDrmKey {
+    installKeybox(string keybox) generates (int32_t status);
+    verifyKeybox() generates (int32_t status);
+    sendCommand(string command, string value) generates (int32_t status, string value);
+};
