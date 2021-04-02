@@ -11,7 +11,12 @@ import android.content.Intent
 import android.os.IBinder
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.database.ContentObserver
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.os.UserHandle
+import lineageos.providers.LineageSettings
 
 class PocketModeService : Service() {
     private lateinit var pocketSensor: PocketSensor
@@ -24,15 +29,44 @@ class PocketModeService : Service() {
             }
         }
     }
+    private var screenStateReceiverRegistered = false
+
+    private val settingsObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) {
+            val proximityCheckOnWakeEnabledByDefault = resources.getBoolean(
+                org.lineageos.platform.internal.R.bool.config_proximityCheckOnWakeEnabledByDefault
+            )
+            val proximityCheckOnWakeEnabled = LineageSettings.System.getIntForUser(
+                contentResolver,
+                LineageSettings.System.PROXIMITY_ON_WAKE,
+                if (proximityCheckOnWakeEnabledByDefault) 1 else 0,
+                UserHandle.USER_CURRENT
+            ) == 1
+
+            if (proximityCheckOnWakeEnabled) {
+                val screenStateFilter = IntentFilter()
+                screenStateFilter.addAction(Intent.ACTION_SCREEN_ON)
+                screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF)
+                registerReceiver(screenStateReceiver, screenStateFilter)
+                screenStateReceiverRegistered = true
+            } else if (screenStateReceiverRegistered) {
+                unregisterReceiver(screenStateReceiver)
+                screenStateReceiverRegistered = false
+
+                pocketSensor.disable()
+            }
+        }
+    }
 
     override fun onCreate() {
         Log.d(TAG, "Creating service")
         pocketSensor = PocketSensor(this, "oneplus.sensor.pocket")
 
-        val screenStateFilter = IntentFilter()
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON)
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF)
-        registerReceiver(screenStateReceiver, screenStateFilter)
+        contentResolver.registerContentObserver(
+            LineageSettings.System.getUriFor(LineageSettings.System.PROXIMITY_ON_WAKE),
+            false,
+            settingsObserver
+        )
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -42,7 +76,7 @@ class PocketModeService : Service() {
     override fun onDestroy() {
         super.onDestroy()
 
-        unregisterReceiver(screenStateReceiver)
+        contentResolver.unregisterContentObserver(settingsObserver)
         pocketSensor.disable()
     }
 
