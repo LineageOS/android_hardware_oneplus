@@ -12,6 +12,8 @@ soong_config_module_type {
 
 oneplus_fod_hal_cc_defaults {
     name: "oneplus_fod_hal_defaults",
+    defaults: ["hidl_defaults"],
+    relative_install_path: "hw",
     soong_config_variables: {
         POS_X: {
             cppflags: ["-DFOD_POS_X=%s"],
@@ -23,17 +25,6 @@ oneplus_fod_hal_cc_defaults {
             cppflags: ["-DFOD_SIZE=%s"],
         },
     },
-}
-
-cc_binary {
-    name: "vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus",
-    defaults: [
-        "hidl_defaults",
-        "oneplus_fod_hal_defaults",
-    ],
-    relative_install_path: "hw",
-    vintf_fragments: ["vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus.xml"],
-    init_rc: ["vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus.rc"],
     srcs: [
         "service.cpp",
         "FingerprintInscreen.cpp",
@@ -48,6 +39,21 @@ cc_binary {
         "vendor.oneplus.fingerprint.extension@1.0",
         "vendor.oneplus.hardware.display@1.0",
     ],
+}
+
+cc_binary {
+    name: "lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus",
+    defaults: ["oneplus_fod_hal_defaults"],
+    vintf_fragments: ["lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus.xml"],
+    init_rc: ["lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus.rc"],
+    system_ext_specific: true,
+}
+
+cc_binary {
+    name: "vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus",
+    defaults: ["oneplus_fod_hal_defaults"],
+    vintf_fragments: ["vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus.xml"],
+    init_rc: ["vendor.lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus.rc"],
     vendor: true,
 }
 
