@@ -16,7 +16,7 @@
 
 #define LOG_TAG "AntiFlickerService"
 
-#include "AntiFlicker.h"
+#include <livedisplay/oneplus/AntiFlicker.h>
 #include <android-base/logging.h>
 #include <fstream>
 
