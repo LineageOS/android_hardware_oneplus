@@ -13,11 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-cc_binary {
-    name: "vendor.lineage.touch@1.0-service.oneplus",
+cc_defaults {
+    name: "oneplus_touch_hal_defaults",
     defaults: ["hidl_defaults"],
-    init_rc: ["vendor.lineage.touch@1.0-service.oneplus.rc"],
-    vintf_fragments: ["vendor.lineage.touch@1.0-service.oneplus.xml"],
     relative_install_path: "hw",
     srcs: [
         "TouchscreenGesture.cpp",
@@ -30,5 +28,20 @@ cc_binary {
         "libutils",
         "vendor.lineage.touch@1.0",
     ],
-    proprietary: true,
+}
+
+cc_binary {
+    name: "lineage.touch@1.0-service.oneplus",
+    defaults: ["oneplus_touch_hal_defaults"],
+    init_rc: ["lineage.touch@1.0-service.oneplus.rc"],
+    vintf_fragments: ["lineage.touch@1.0-service.oneplus.xml"],
+    system_ext_specific: true,
+}
+
+cc_binary {
+    name: "vendor.lineage.touch@1.0-service.oneplus",
+    defaults: ["oneplus_touch_hal_defaults"],
+    init_rc: ["vendor.lineage.touch@1.0-service.oneplus.rc"],
+    vintf_fragments: ["vendor.lineage.touch@1.0-service.oneplus.xml"],
+    vendor: true,
 }
