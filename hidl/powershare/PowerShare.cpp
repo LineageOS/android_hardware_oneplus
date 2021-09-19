@@ -26,8 +26,6 @@ namespace powershare {
 namespace V1_0 {
 namespace implementation {
 
-#define WIRELESS_TX_ENABLE_PATH "/proc/wireless/enable_tx"
-
 /*
  * Write value to path and close file.
  */
