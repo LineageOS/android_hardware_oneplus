@@ -28,6 +28,7 @@ cc_defaults {
         "libutils",
         "vendor.lineage.touch@1.0",
     ],
+    local_include_dirs: ["include"],
 }
 
 cc_binary {
