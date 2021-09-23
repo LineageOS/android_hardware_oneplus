@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,13 +39,11 @@ class TouchscreenGesture : public ITouchscreenGesture {
     Return<bool> setGestureEnabled(const ::vendor::lineage::touch::V1_0::Gesture& gesture,
                                    bool enabled) override;
 
-  private:
     typedef struct {
         int32_t keycode;
         const char* name;
         const char* path;
     } GestureInfo;
-    static const std::map<int32_t, GestureInfo> kGestureInfoMap;  // id -> info
 };
 
 }  // namespace implementation
