@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016 The CyanogenMod Project
+ *               2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.lineageos.pocketmode
 
-package org.lineageos.pocketmode;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import org.lineageos.pocketmode.BootCompletedReceiver
 
-public class BootCompletedReceiver extends BroadcastReceiver {
+class BootCompletedReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        Log.d(TAG, "Starting")
+        context.startService(Intent(context, PocketModeService::class.java))
+    }
 
-    private static final String TAG = "OnePlusPocketMode";
-
-    @Override
-    public void onReceive(final Context context, Intent intent) {
-        Log.d(TAG, "Starting");
-        context.startService(new Intent(context, PocketModeService.class));
+    companion object {
+        private const val TAG = "OnePlusPocketMode"
     }
 }
