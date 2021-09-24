@@ -16,6 +16,7 @@ android_app {
     name: "OnePlusPocketMode",
 
     srcs: ["src/**/*.kt"],
+    resource_dirs: ["res"],
 
     certificate: "platform",
     platform_apis: true,

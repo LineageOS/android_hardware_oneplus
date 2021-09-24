@@ -75,15 +75,6 @@ class ProximitySensor(private val mContext: Context) : SensorEventListener {
 
     init {
         mExecutorService = Executors.newSingleThreadExecutor()
-        when (SystemProperties.get("ro.lineage.device", "")) {
-            "cheeseburger" -> FPC_FILE =
-                    "/sys/devices/soc/soc:fpc_fpc1020/proximity_state"
-            "dumpling" -> FPC_FILE =
-                    "/sys/devices/soc/soc:goodix_fp/proximity_state"
-            else -> {
-                FPC_FILE = ""
-                Log.e(TAG, "Device model for proximity state file not found!")
-            }
-        }
+        FPC_FILE = mContext.getString(R.string.proximity_sensor)
     }
 }
