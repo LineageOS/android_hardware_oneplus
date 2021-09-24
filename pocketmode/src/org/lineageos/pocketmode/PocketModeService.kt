@@ -17,6 +17,7 @@ import android.os.Looper
 import android.util.Log
 import android.os.UserHandle
 import lineageos.providers.LineageSettings
+import org.lineageos.pocketmode.R
 
 class PocketModeService : Service() {
     private lateinit var pocketSensor: PocketSensor
@@ -60,7 +61,7 @@ class PocketModeService : Service() {
 
     override fun onCreate() {
         Log.d(TAG, "Creating service")
-        pocketSensor = PocketSensor(this, "oneplus.sensor.pocket")
+        pocketSensor = PocketSensor(this, resources.getString(R.string.pocket_sensor_type))
 
         contentResolver.registerContentObserver(
             LineageSettings.System.getUriFor(LineageSettings.System.PROXIMITY_ON_WAKE),
