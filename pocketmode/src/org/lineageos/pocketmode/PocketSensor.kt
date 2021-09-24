@@ -11,6 +11,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.util.Log
+import org.lineageos.pocketmode.R
 
 import java.io.File
 import java.util.concurrent.Executors
@@ -22,9 +23,11 @@ class PocketSensor(private val context: Context, sensorType: String) : SensorEve
     }
 
     private val executorService = Executors.newSingleThreadExecutor()
+    private val fingerprintDisablePath =
+        context.resources.getString(R.string.fingerprint_disable_path)
 
     override fun onSensorChanged(event: SensorEvent) {
-        File(FINGERPRINT_DISABLE_PATH).writeText(if (event.values[0] == 0.0f) "1" else "0")
+        File(fingerprintDisablePath).writeText(if (event.values[0] == 0.0f) "1" else "0")
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
@@ -43,15 +46,12 @@ class PocketSensor(private val context: Context, sensorType: String) : SensorEve
             Log.d(TAG, "Disabling")
             executorService.submit {
                 sensorManager.unregisterListener(this, sensor)
-                File(FINGERPRINT_DISABLE_PATH).writeText("0")
+                File(fingerprintDisablePath).writeText("0")
             }
         }
     }
 
     companion object {
         private const val TAG = "PocketSensor"
-
-        private const val FINGERPRINT_DISABLE_PATH =
-            "/sys/devices/platform/soc/soc:goodix_fp/proximity_state"
     }
 }
