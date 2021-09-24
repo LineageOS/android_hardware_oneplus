@@ -13,12 +13,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+filegroup {
+    name: "vendor.lineage.touch@1.0-oneplus-touchgesture",
+    srcs: ["TouchscreenGesture.cpp"],
+}
+
+cc_library_headers {
+    name: "vendor.lineage.touch@1.0-oneplus-headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
+}
+
 cc_defaults {
     name: "oneplus_touch_hal_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
     srcs: [
-        "TouchscreenGesture.cpp",
+        ":vendor.lineage.touch@1.0-oneplus-touchgesture",
         "service.cpp",
     ],
     shared_libs: [
@@ -29,6 +40,9 @@ cc_defaults {
         "vendor.lineage.touch@1.0",
     ],
     local_include_dirs: ["include"],
+    header_libs: [
+        "vendor.lineage.touch@1.0-oneplus-headers",
+    ],
 }
 
 cc_binary {
