@@ -24,14 +24,23 @@ class PocketSensor(context: Context, sensorType: String, private val sensorValue
     }
 
     private val executorService = Executors.newSingleThreadExecutor()
-    private val fingerprintDisablePath =
-        context.resources.getString(R.string.fingerprint_disable_path)
+    private val fingerprintDisablePaths =
+        context.resources.getStringArray(R.array.fingerprint_disable_paths)
 
     override fun onSensorChanged(event: SensorEvent) {
-        File(fingerprintDisablePath).writeText(if (event.values[0] == sensorValue) "1" else "0")
+        setFingerprintEnabled(event.values[0] == sensorValue)
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
+
+    private fun setFingerprintEnabled(enabled: Boolean) {
+        fingerprintDisablePaths.forEach {
+            val file = File(it)
+            if (file.canWrite()) {
+                file.writeText(if (enabled) "1" else "0")
+            }
+        }
+    }
 
     fun enable() {
         if (sensor != null) {
@@ -47,7 +56,7 @@ class PocketSensor(context: Context, sensorType: String, private val sensorValue
             Log.d(TAG, "Disabling")
             executorService.submit {
                 sensorManager.unregisterListener(this, sensor)
-                File(fingerprintDisablePath).writeText("0")
+                setFingerprintEnabled(true)
             }
         }
     }

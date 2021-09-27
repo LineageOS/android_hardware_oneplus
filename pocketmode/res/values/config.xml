@@ -5,7 +5,7 @@
 -->
 <resources>
     <!-- Fingerprint disable path -->
-    <string name="fingerprint_disable_path"></string>
+    <string-array name="fingerprint_disable_paths" />
 
     <!-- Pocket sensor -->
     <string name="pocket_sensor_type">android.sensor.proximity</string>
