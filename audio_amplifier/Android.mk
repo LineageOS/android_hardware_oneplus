@@ -43,6 +43,11 @@ LOCAL_SHARED_LIBRARIES += \
     liblog \
     libtinyalsa
 
+ifeq ($(strip $(AUDIO_FEATURE_ENABLED_EXT_AMPLIFIER_MONO)),true)
+LOCAL_CFLAGS += \
+     -DSINGLE_CHANNEL
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
 endif
