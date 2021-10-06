@@ -43,6 +43,11 @@ LOCAL_SHARED_LIBRARIES += \
     liblog \
     libtinyalsa
 
+ifneq ($(TARGET_BOARD_PLATFORM),msm8998)
+LOCAL_CFLAGS += \
+     -DDEVICE_LIST_INIT
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
 endif
