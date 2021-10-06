@@ -65,7 +65,7 @@ int tfa98xx_start_feedback(void* adev, uint32_t snd_device) {
     tfa_dev->adev = (struct audio_device*)adev;
     int pcm_dev_tx_id = 0, rc = 0;
     struct pcm_config pcm_config_tfa98xx = {
-            .channels = 2,
+            .channels = TFA98XX_CHANNELS,
             .rate = 48000,
             .period_size = 256,
             .period_count = 4,
