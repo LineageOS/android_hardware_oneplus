@@ -43,6 +43,9 @@ LOCAL_SHARED_LIBRARIES += \
     liblog \
     libtinyalsa
 
+LOCAL_CFLAGS += \
+    -DTFA98XX_CHANNELS=$(or $(AUDIO_AMPLIFIER_TFA98XX_CHANNELS), 2)
+
 include $(BUILD_SHARED_LIBRARY)
 
 endif
