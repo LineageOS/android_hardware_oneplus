@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2015 The CyanogenMod Project
+ *               2021 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package org.lineageos.settings.device
 
 import android.R

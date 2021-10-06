@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2016 The CyanogenMod Project
+                  2021 The LineageOS Project
+    SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string-array name="notification_slider_action_entries" translatable="false">
+        <item>@string/notification_slider_mode_none</item>
+        <item>@string/notification_slider_mode_vibration</item>
+        <item>@string/notification_slider_mode_total_silence</item>
+    </string-array>
+
+    <string-array name="notification_slider_action_entry_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>
