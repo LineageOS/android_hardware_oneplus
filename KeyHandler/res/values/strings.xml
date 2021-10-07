@@ -13,4 +13,9 @@
     <string name="notification_slider_mode_silent">Silent</string>
     <string name="notification_slider_mode_normal">Normal</string>
     <string name="notification_slider_mode_vibration">Vibration</string>
+    <string name="notification_slider_mode_dnd_priority_only">Priority only</string>
+    <string name="notification_slider_mode_dnd_total_silence">Total silence</string>
+    <string name="notification_slider_mode_dnd_alarms_only">Alarms only</string>
+    <string name="notification_slider_mute_media_title">Media</string>
+    <string name="notification_slider_mute_media_summary">Mute media when switching to Silent</string>
 </resources>
