@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bed34037_c1c09408",
+        "filename": "KeyHandler/AndroidManifest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2021-10-07T19:25:54Z",
+      "side": 1,
+      "message": "5 spaces",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "03748d903c96df6156a5ad117c117290b857c366",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04927e9a_f21d9de2",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/ConfigPanelSearchIndexablesProvider.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2021-10-07T19:25:54Z",
+      "side": 1,
+      "message": "maybe `override fun onCreate(): Boolean \u003d true` syntax works?",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "03748d903c96df6156a5ad117c117290b857c366",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9f9997_886ff000",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2021-10-07T19:25:54Z",
+      "side": 1,
+      "message": "no newline here",
+      "revId": "03748d903c96df6156a5ad117c117290b857c366",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec95aefd_0a288d7e",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2021-10-07T19:25:54Z",
+      "side": 1,
+      "message": "Use kotlin\u0027s .toInt()",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 48
+      },
+      "revId": "03748d903c96df6156a5ad117c117290b857c366",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
