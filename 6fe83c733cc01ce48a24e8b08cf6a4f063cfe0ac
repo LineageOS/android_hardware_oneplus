@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a02463e3_05e13297",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 21651
+      },
+      "writtenOn": "2021-10-07T20:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4906739c_0caa23e9",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "6fe83c733cc01ce48a24e8b08cf6a4f063cfe0ac",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c2949ad_7b98b680",
         "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
         "patchSetId": 6
@@ -69,6 +93,30 @@
       "revId": "6fe83c733cc01ce48a24e8b08cf6a4f063cfe0ac",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c684b8f_e11412e0",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 21651
+      },
+      "writtenOn": "2021-10-07T20:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c2949ad_7b98b680",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 40
+      },
+      "revId": "6fe83c733cc01ce48a24e8b08cf6a4f063cfe0ac",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
