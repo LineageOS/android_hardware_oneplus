@@ -5,12 +5,14 @@
 
 package org.lineageos.settings.device
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.preference.PreferenceFragment
 
 class ButtonSettingsFragment : PreferenceFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        getPreferenceManager().setSharedPreferencesMode(Context.MODE_MULTI_PROCESS)
         addPreferencesFromResource(R.xml.button_panel)
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true)
     }

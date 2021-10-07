@@ -5,11 +5,13 @@
 
 package org.lineageos.settings.device
 
+import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.AudioManager
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings
 import android.view.KeyEvent
 
 import androidx.preference.PreferenceManager
@@ -18,6 +20,7 @@ import com.android.internal.os.DeviceKeyHandler
 
 class KeyHandler(private val context: Context) : DeviceKeyHandler {
     private val audioManager = context.getSystemService(AudioManager::class.java)
+    private val notificationManager = context.getSystemService(NotificationManager::class.java);
     private val vibrator = context.getSystemService(Vibrator::class.java)
     private val packageContext = context.createPackageContext(
             KeyHandler::class.java.getPackage().name, 0)
@@ -26,31 +29,22 @@ class KeyHandler(private val context: Context) : DeviceKeyHandler {
         if (event.action == KeyEvent.ACTION_DOWN) {
             when (event.scanCode) {
                 POSITION_TOP -> {
-                    val mode = Integer.parseInt(
-                            packageContext.getSharedPreferences(
+                    handleMode(Integer.parseInt(packageContext.getSharedPreferences(
                             packageContext.getPackageName() + "_preferences",
                             Context.MODE_PRIVATE or Context.MODE_MULTI_PROCESS)
-                            .getString(NOTIF_SLIDER_TOP_KEY, "2"))
-                    audioManager.setRingerModeInternal(mode)
-                    vibrateIfNeeded(mode)
+                            .getString(NOTIF_SLIDER_TOP_KEY, "2")))
                 }
                 POSITION_MIDDLE -> {
-                    val mode = Integer.parseInt(
-                            packageContext.getSharedPreferences(
+                    handleMode(Integer.parseInt(packageContext.getSharedPreferences(
                             packageContext.getPackageName() + "_preferences",
                             Context.MODE_PRIVATE or Context.MODE_MULTI_PROCESS)
-                            .getString(NOTIF_SLIDER_MIDDLE_KEY, "1"))
-                    audioManager.setRingerModeInternal(mode)
-                    vibrateIfNeeded(mode)
+                            .getString(NOTIF_SLIDER_MIDDLE_KEY, "1")))
                 }
                 POSITION_BOTTOM -> {
-                    val mode = Integer.parseInt(
-                            packageContext.getSharedPreferences(
+                    handleMode(Integer.parseInt(packageContext.getSharedPreferences(
                             packageContext.getPackageName() + "_preferences",
                             Context.MODE_PRIVATE or Context.MODE_MULTI_PROCESS)
-                            .getString(NOTIF_SLIDER_BOTTOM_KEY, "0"))
-                    audioManager.setRingerModeInternal(mode)
-                    vibrateIfNeeded(mode)
+                            .getString(NOTIF_SLIDER_BOTTOM_KEY, "0")))
                 }
             }
         }
@@ -66,6 +60,20 @@ class KeyHandler(private val context: Context) : DeviceKeyHandler {
                 vibrator.vibrate(MODE_NORMAL_EFFECT)
             }
         }
+    }
+
+    fun handleMode(mode: Int) {
+        when (mode) {
+            0, 1, 2 -> {
+                notificationManager.setZenMode(Settings.Global.ZEN_MODE_OFF, null, TAG)
+                audioManager.setRingerModeInternal(mode)
+            }
+            3, 4, 5 -> {
+                audioManager.setRingerModeInternal(AudioManager.RINGER_MODE_NORMAL);
+                notificationManager.setZenMode(mode - 2, null, TAG)
+            }
+        }
+        vibrateIfNeeded(mode)
     }
 
     companion object {
