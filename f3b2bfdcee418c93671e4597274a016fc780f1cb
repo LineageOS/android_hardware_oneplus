@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0b6e75_639443b0",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2021-10-08T09:25:00Z",
+      "side": 1,
+      "message": "we can probably store ints instead.",
+      "range": {
+        "startLine": 58,
+        "startChar": 49,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "f3b2bfdcee418c93671e4597274a016fc780f1cb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
