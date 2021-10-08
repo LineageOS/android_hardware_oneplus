@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94bb226b_bf7fae82",
+        "filename": "KeyHandler/res/values/strings.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2021-10-08T04:20:06Z",
+      "side": 1,
+      "message": "\u0027Mute media\u0027?",
+      "revId": "b46b6ab53ad19d332c412eb515f776d1785f929c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920920b2_b59c6816",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2021-10-08T04:20:06Z",
+      "side": 1,
+      "message": "Probably should also check stream type extra here.",
+      "revId": "b46b6ab53ad19d332c412eb515f776d1785f929c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357279df_7173b5ec",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2021-10-08T04:20:06Z",
+      "side": 1,
+      "message": "Whx not store the prefs instance in a member variable?",
+      "revId": "b46b6ab53ad19d332c412eb515f776d1785f929c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492aef99_6a30c418",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2021-10-08T04:20:06Z",
+      "side": 1,
+      "message": "Add curly braces here and below",
+      "revId": "b46b6ab53ad19d332c412eb515f776d1785f929c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
