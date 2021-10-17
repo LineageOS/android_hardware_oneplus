@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ba6b896_2ba4f560",
+        "filename": "doze/src/org/lineageos/settings/doze/DozeSettingsActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2021-10-17T13:16:46Z",
+      "side": 1,
+      "message": "not needed since you are importing it",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "a3577aa9a2b1c1ae8c421f038cd8b7f419f88742",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}

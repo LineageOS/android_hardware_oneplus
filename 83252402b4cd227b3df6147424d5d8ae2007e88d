@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d54f1c2_76e8d421",
+        "filename": "doze/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2021-10-17T13:16:46Z",
+      "side": 0,
+      "message": "maybe moved sdk and exported changes to seperate commit? https://review.lineageos.org/q/I2ce2b2cd1dcd69e343ae8577587483b19d825fdc",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "83252402b4cd227b3df6147424d5d8ae2007e88d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
