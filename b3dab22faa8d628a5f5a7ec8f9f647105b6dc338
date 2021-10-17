@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c1b12b1_c771ab49",
+        "filename": "doze/src/org/lineageos/settings/doze/DozeSettingsActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2021-10-17T09:42:37Z",
+      "side": 1,
+      "message": "over 100 chars",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 111
+      },
+      "revId": "b3dab22faa8d628a5f5a7ec8f9f647105b6dc338",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45707c7d_e82a95d3",
+        "filename": "doze/src/org/lineageos/settings/doze/DozeSettingsFragment.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2021-10-17T09:42:37Z",
+      "side": 1,
+      "message": "why did you expand that to separate imports?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "b3dab22faa8d628a5f5a7ec8f9f647105b6dc338",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
