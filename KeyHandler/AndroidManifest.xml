@@ -15,8 +15,8 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          android:sharedUserId="android.uid.system"
-          package="org.lineageos.settings.device">
+    android:sharedUserId="android.uid.system"
+    package="org.lineageos.settings.device">
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -24,7 +24,17 @@
         android:label="@string/device_settings_app_name"
         android:theme="@style/Theme.Main"
         android:defaultToDeviceProtectedStorage="true"
-        android:directBootAware="true">
+        android:directBootAware="true"
+        android:persistent="true">
+
+        <receiver
+            android:name="org.lineageos.settings.device.BootCompletedReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name=".ConfigPanelSearchIndexablesProvider"
@@ -41,13 +51,18 @@
         <!-- Additional button settings (Button settings) -->
         <activity
             android:name=".ButtonSettingsActivity"
-            android:label="@string/button_panel_title">
+            android:label="@string/button_panel_title"
+            android:exported="false">
             <intent-filter>
                 <action android:name="org.lineageos.settings.device.ADDITIONAL_BUTTONS_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".KeyHandler" />
-     </application>
+        <service
+            android:name="org.lineageos.settings.device.KeyHandler"
+            android:permission="KeyHandlerService"
+            android:exported="false">
+        </service>
+    </application>
 </manifest>
