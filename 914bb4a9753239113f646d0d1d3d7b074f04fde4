@@ -22,6 +22,30 @@
       "revId": "914bb4a9753239113f646d0d1d3d7b074f04fde4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33be875_70ec728a",
+        "filename": "KeyHandler/Android.bp",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 21651
+      },
+      "writtenOn": "2021-10-21T14:28:58Z",
+      "side": 1,
+      "message": "Seems like org.lineageos.platform.internal is not needed.",
+      "parentUuid": "674d027b_2704a80a",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 6
+      },
+      "revId": "914bb4a9753239113f646d0d1d3d7b074f04fde4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
