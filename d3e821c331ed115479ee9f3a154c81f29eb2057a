@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30d04622_8ebb242d",
+        "filename": "KeyHandler/src/org/lineageos/settings/device/KeyHandler.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2021-10-21T05:33:33Z",
+      "side": 1,
+      "message": "Better return here? Avoids the need for `!!` below.",
+      "revId": "d3e821c331ed115479ee9f3a154c81f29eb2057a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
