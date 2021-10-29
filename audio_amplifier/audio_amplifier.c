@@ -116,7 +116,7 @@ int tfa98xx_start_feedback(void* adev, uint32_t snd_device) {
 
     rc = pcm_start(tfa_dev->tfa98xx_out);
     if (rc < 0) {
-        ALOGE("%d: pcm start for TX failed", __LINE__);
+        ALOGE("%d: pcm start for TX failed (%s)", __LINE__, pcm_get_error(tfa_dev->tfa98xx_out));
         rc = -EINVAL;
         goto error;
     }
