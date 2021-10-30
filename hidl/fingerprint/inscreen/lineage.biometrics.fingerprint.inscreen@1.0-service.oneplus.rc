@@ -1,6 +1,0 @@
-service fingerprint-inscreen-1-0 /system_ext/bin/hw/lineage.biometrics.fingerprint.inscreen@1.0-service.oneplus
-    interface vendor.lineage.biometrics.fingerprint.inscreen@1.0::IFingerprintInscreen default
-    class hal
-    user system
-    group system
-    shutdown critical
