@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_TAG "android.hardware.biometrics.fingerprint@2.1-service"
-#define LOG_VERBOSE "android.hardware.biometrics.fingerprint@2.1-service"
+#define LOG_TAG "android.hardware.biometrics.fingerprint@2.3-service.oneplus"
+#define LOG_VERBOSE "android.hardware.biometrics.fingerprint@2.3-service.oneplus"
 
 #include <hardware/hw_auth_token.h>
 
@@ -26,11 +26,20 @@
 #include <inttypes.h>
 #include <unistd.h>
 
+#define OP_ENABLE_FP_LONGPRESS 3
+#define OP_DISABLE_FP_LONGPRESS 4
+#define OP_RESUME_FP_ENROLL 8
+#define OP_FINISH_FP_ENROLL 10
+
+#define OP_DISPLAY_AOD_MODE 8
+#define OP_DISPLAY_NOTIFY_PRESS 9
+#define OP_DISPLAY_SET_DIM 10
+
 namespace android {
 namespace hardware {
 namespace biometrics {
 namespace fingerprint {
-namespace V2_1 {
+namespace V2_3 {
 namespace implementation {
 
 // Supported fingerprint HAL version
@@ -47,6 +56,8 @@ BiometricsFingerprint::BiometricsFingerprint() : mClientCallback(nullptr), mDevi
     if (!mDevice) {
         ALOGE("Can't open HAL module");
     }
+    mVendorFpService = IVendorFingerprintExtensions::getService();
+    mVendorDisplayService = IOneplusDisplay::getService();
 }
 
 BiometricsFingerprint::~BiometricsFingerprint() {
@@ -62,6 +73,25 @@ BiometricsFingerprint::~BiometricsFingerprint() {
         return;
     }
     mDevice = nullptr;
+}
+
+Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
+    return true;
+}
+
+Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
+    mFodCircleVisible = true;
+    mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
+    mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 1);
+    return Void();
+}
+
+Return<void> BiometricsFingerprint::onFingerUp() {
+    mFodCircleVisible = false;
+    mVendorDisplayService->setMode(OP_DISPLAY_AOD_MODE, 0);
+    mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
+    mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 0);
+    return Void();
 }
 
 Return<RequestStatus> BiometricsFingerprint::ErrorFilter(int32_t error) {
@@ -148,7 +178,7 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
         const sp<IBiometricsFingerprintClientCallback>& clientCallback) {
     std::lock_guard<std::mutex> lock(mClientCallbackMutex);
     mClientCallback = clientCallback;
-    // This is here because HAL 2.1 doesn't have a way to propagate a
+    // This is here because HAL 2.3 doesn't have a way to propagate a
     // unique token for its driver. Subsequent versions should send a unique
     // token for each call to setNotify(). This is fine as long as there's only
     // one fingerprint device on the platform.
@@ -156,6 +186,8 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
 }
 
 Return<uint64_t> BiometricsFingerprint::preEnroll()  {
+    mVendorFpService->updateStatus(OP_DISABLE_FP_LONGPRESS);
+    mVendorFpService->updateStatus(OP_RESUME_FP_ENROLL);
     return mDevice->pre_enroll(mDevice);
 }
 
@@ -167,6 +199,8 @@ Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69
 }
 
 Return<RequestStatus> BiometricsFingerprint::postEnroll() {
+    mVendorFpService->updateStatus(OP_FINISH_FP_ENROLL);
+    onFingerUp();
     return ErrorFilter(mDevice->post_enroll(mDevice));
 }
 
@@ -175,6 +209,7 @@ Return<uint64_t> BiometricsFingerprint::getAuthenticatorId() {
 }
 
 Return<RequestStatus> BiometricsFingerprint::cancel() {
+    mVendorFpService->updateStatus(OP_FINISH_FP_ENROLL);
     return ErrorFilter(mDevice->cancel(mDevice));
 }
 
@@ -202,6 +237,7 @@ Return<RequestStatus> BiometricsFingerprint::setActiveGroup(uint32_t gid,
 
 Return<RequestStatus> BiometricsFingerprint::authenticate(uint64_t operationId,
         uint32_t gid) {
+    mVendorFpService->updateStatus(OP_ENABLE_FP_LONGPRESS);
     return ErrorFilter(mDevice->authenticate(mDevice, operationId, gid));
 }
 
@@ -249,7 +285,7 @@ fingerprint_device_t* BiometricsFingerprint::openHal() {
     }
 
     if (kVersion != device->version) {
-        // enforce version on new devices because of HIDL@2.1 translation layer
+        // enforce version on new devices because of HIDL@2.3 translation layer
         ALOGE("Wrong fp version. Expected %d, got %d", kVersion, device->version);
         return nullptr;
     }
@@ -333,6 +369,7 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t *msg) {
                         msg->data.authenticated.finger.gid,
                         token).isOk()) {
                     ALOGE("failed to invoke fingerprint onAuthenticated callback");
+                getInstance()->onFingerUp();
                 }
             } else {
                 // Not a recognized fingerprint
@@ -360,7 +397,7 @@ void BiometricsFingerprint::notify(const fingerprint_msg_t *msg) {
 }
 
 } // namespace implementation
-}  // namespace V2_1
+}  // namespace V2_3
 }  // namespace fingerprint
 }  // namespace biometrics
 }  // namespace hardware
