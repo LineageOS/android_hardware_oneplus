@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bccb3d04_dd2b1026",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 20352
+      },
+      "writtenOn": "2021-11-07T17:57:38Z",
+      "side": 1,
+      "message": "Works fine on hotdogg.",
+      "revId": "675c5dbaf1cb7c7093736d2a464ddc315ce8190c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
