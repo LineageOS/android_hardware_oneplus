@@ -13,6 +13,12 @@
             android:summary="@string/alert_slider_mute_media_summary"
             android:defaultValue="0" />
 
+        <SwitchPreference
+            android:key="config_override_zen_mode"
+            android:title="@string/alert_slider_override_zen_mode_title"
+            android:summary="@string/alert_slider_override_zen_mode_summary"
+            android:defaultValue="1" />
+
         <ListPreference
             android:key="config_top_position"
             android:dialogTitle="@string/alert_slider_selection_dialog_title"
