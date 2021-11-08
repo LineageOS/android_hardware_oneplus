@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb77a587_3b93f037",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 18590
+      },
+      "writtenOn": "2021-11-08T21:39:36Z",
+      "side": 1,
+      "message": "no need for this commit, tested without and results are very similar if not better",
+      "revId": "7ad80866e57fe9d6d7ead81f945be498db4806c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
