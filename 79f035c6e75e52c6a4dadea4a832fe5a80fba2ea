@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d325d29c_24afff38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 21651
+      },
+      "writtenOn": "2021-11-15T11:39:54Z",
+      "side": 1,
+      "message": "It also needs theme update\n\nout/soong/.intermediates/hardware/oneplus/KeyHandler/KeyHandler/android_common/manifest_merger/AndroidManifest.xml:39: error: resource style/Theme.Main (aka org.lineageos.settings.device:style/Theme.Main) not found. ",
+      "revId": "79f035c6e75e52c6a4dadea4a832fe5a80fba2ea",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
