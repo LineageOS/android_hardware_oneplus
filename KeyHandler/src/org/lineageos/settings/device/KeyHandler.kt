@@ -22,6 +22,8 @@ import android.provider.Settings
 import android.view.KeyEvent
 import androidx.preference.PreferenceManager
 
+import java.io.File
+
 class KeyHandler : Service() {
     private lateinit var audioManager: AudioManager
     private lateinit var notificationManager: NotificationManager
@@ -65,6 +67,14 @@ class KeyHandler : Service() {
                 }
             }
         }
+
+        fun restoreState() {
+            File(SYSFS_EXTCON).walk().firstOrNull {
+                it.isDirectory && it.name.matches(Regex("extcon\\d+"))
+            }?.let {
+                onUEvent(UEvent("STATE=${File(it, "state").readText()}"))
+            }
+        }
     }
 
     override fun onCreate() {
@@ -79,6 +89,7 @@ class KeyHandler : Service() {
         )
         alertSliderEventObserver.startObserving("tri-state-key")
         alertSliderEventObserver.startObserving("tri_state_key")
+        alertSliderEventObserver.restoreState()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -146,6 +157,9 @@ class KeyHandler : Service() {
         private const val ZEN_PRIORITY_ONLY = 3
         private const val ZEN_TOTAL_SILENCE = 4
         private const val ZEN_ALARMS_ONLY = 5
+
+        // Paths
+        private const val SYSFS_EXTCON = "/sys/devices/platform/soc/soc:tri_state_key/extcon"
 
         // Vibration effects
         private val MODE_NORMAL_EFFECT = VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK)
