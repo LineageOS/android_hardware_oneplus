@@ -22,6 +22,8 @@ import android.provider.Settings
 import android.view.KeyEvent
 import androidx.preference.PreferenceManager
 
+import java.io.File
+
 class KeyHandler : Service() {
     private lateinit var audioManager: AudioManager
     private lateinit var notificationManager: NotificationManager
@@ -65,6 +67,13 @@ class KeyHandler : Service() {
                 }
             }
         }
+
+        fun restoreState() {
+            val file = File("/sys/devices/platform/soc/soc:tri_state_key/extcon").walk().firstOrNull {
+                it.isDirectory && it.name.matches(Regex("extcon\\d+"))
+            }
+            onUEvent(UEvent("STATE=${File(file, "state").readText()}"))
+        }
     }
 
     override fun onCreate() {
@@ -79,6 +88,7 @@ class KeyHandler : Service() {
         )
         alertSliderEventObserver.startObserving("tri-state-key")
         alertSliderEventObserver.startObserving("tri_state_key")
+        alertSliderEventObserver.restoreState()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
