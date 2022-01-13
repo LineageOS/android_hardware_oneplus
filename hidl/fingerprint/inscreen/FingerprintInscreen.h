@@ -1,10 +1,9 @@
 /*
- * Copyright (C) 2021 The LineageOS Project
+ * Copyright (C) 2021-2022 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef VENDOR_LINEAGE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
-#define VENDOR_LINEAGE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
+#pragma once
 
 #include <vendor/lineage/biometrics/fingerprint/inscreen/1.0/IFingerprintInscreen.h>
 #include <vendor/oneplus/fingerprint/extension/1.0/IVendorFingerprintExtensions.h>
@@ -61,5 +60,3 @@ class FingerprintInscreen : public IFingerprintInscreen {
 }  // namespace biometrics
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_BIOMETRICS_FINGERPRINT_INSCREEN_V1_0_FINGERPRINTINSCREEN_H
