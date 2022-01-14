@@ -22,6 +22,30 @@
       },
       "revId": "606e3e8c762cb5e9978127b2b56c27226d3abbcc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22c4a306_63308bda",
+        "filename": "doze/res/xml/doze_settings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 23396
+      },
+      "writtenOn": "2022-01-14T13:59:42Z",
+      "side": 1,
+      "message": "oh, that\u0027s a derp, my bad, I\u0027ll repush that part, or if you can that\u0027ll be great",
+      "parentUuid": "c764cd58_5086371f",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "606e3e8c762cb5e9978127b2b56c27226d3abbcc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
