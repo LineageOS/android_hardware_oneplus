@@ -7,5 +7,9 @@ service vendor.fps_hal /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.
     group system input uhid
 
 on boot
+    chown system system /sys/class/drm/card0-DSI-1/auth_status
+    chmod 0666 /sys/class/drm/card0-DSI-1/auth_status
+    chown system system /sys/class/drm/card0-DSI-1/cancel_status
+    chmod 0666 /sys/class/drm/card0-DSI-1/cancel_status
     chown system system /sys/class/drm/card0-DSI-1/power_status
     chmod 0666 /sys/class/drm/card0-DSI-1/power_status
