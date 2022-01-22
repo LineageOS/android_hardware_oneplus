@@ -34,6 +34,7 @@
 #define OP_DISPLAY_NOTIFY_PRESS 9
 #define OP_DISPLAY_SET_DIM 10
 
+#define AUTH_STATUS_PATH  "/sys/class/drm/card0-DSI-1/auth_status"
 #define POWER_STATUS_PATH "/sys/class/drm/card0-DSI-1/power_status"
 
 namespace {
@@ -95,12 +96,14 @@ Return<bool> BiometricsFingerprint::isUdfps(uint32_t) {
 }
 
 Return<void> BiometricsFingerprint::onFingerDown(uint32_t, uint32_t, float, float) {
+    mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1); // Fixme! workaround for in-app fod auth
     mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 1);
 
     return Void();
 }
 
 Return<void> BiometricsFingerprint::onFingerUp() {
+    this->isCancelled = 0;
     mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 0);
 
     return Void();
@@ -225,9 +228,11 @@ Return<uint64_t> BiometricsFingerprint::getAuthenticatorId() {
 }
 
 Return<RequestStatus> BiometricsFingerprint::cancel() {
+    this->isCancelled = 1;
     mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
     mVendorFpService->updateStatus(OP_FINISH_FP_ENROLL);
     mVendorFpService->updateStatus(OP_ENABLE_FP_LONGPRESS);
+    set(AUTH_STATUS_PATH, 2);
 
     return ErrorFilter(mDevice->cancel(mDevice));
 }
@@ -257,7 +262,12 @@ Return<RequestStatus> BiometricsFingerprint::setActiveGroup(uint32_t gid,
 Return<RequestStatus> BiometricsFingerprint::authenticate(uint64_t operationId,
         uint32_t gid) {
     set(POWER_STATUS_PATH, 1);
-    mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
+    if (this->isCancelled) {
+        mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
+        set(AUTH_STATUS_PATH, 0);
+    } else {
+        set(AUTH_STATUS_PATH, 1);
+    }
     mVendorFpService->updateStatus(OP_ENABLE_FP_LONGPRESS);
 
     return ErrorFilter(mDevice->authenticate(mDevice, operationId, gid));
