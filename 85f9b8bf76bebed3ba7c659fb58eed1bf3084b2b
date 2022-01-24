@@ -16,6 +16,29 @@
       "message": "sadly a new bug was introduced and this time fod auth in apps encounters a problem. sigh",
       "revId": "85f9b8bf76bebed3ba7c659fb58eed1bf3084b2b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6e04619_6624278c",
+        "filename": "hidl/fingerprint/BiometricsFingerprint.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-01-24T17:20:22Z",
+      "side": 1,
+      "message": "Make it a class attribute",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "85f9b8bf76bebed3ba7c659fb58eed1bf3084b2b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
