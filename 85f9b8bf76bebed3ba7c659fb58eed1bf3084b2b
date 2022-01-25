@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dd00048_82418d2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 30385
+      },
+      "writtenOn": "2022-01-25T10:06:16Z",
+      "side": 1,
+      "message": "Maybe also turn dim on in onFingerDown? Will take care of cases like above",
+      "parentUuid": "68135777_0ef7a27d",
+      "revId": "85f9b8bf76bebed3ba7c659fb58eed1bf3084b2b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6e04619_6624278c",
