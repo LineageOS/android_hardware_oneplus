@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bdfaf12_74b974a4",
+        "filename": "doze/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-01-27T09:54:27Z",
+      "side": 1,
+      "message": "We\u0027re still targeting old API. For this commit to make sense, we should remove this.",
+      "range": {
+        "startLine": 31,
+        "startChar": 34,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "a1cc972510988dd65624964549f9208370d01d54",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
