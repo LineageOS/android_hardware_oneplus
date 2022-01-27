@@ -22,6 +22,30 @@
       },
       "revId": "a1cc972510988dd65624964549f9208370d01d54",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e73b1bf_8ee92cc7",
+        "filename": "doze/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 23396
+      },
+      "writtenOn": "2022-01-27T09:57:45Z",
+      "side": 1,
+      "message": "I haven\u0027t tried a build without this, can you check it once?\nI\u0027ll abandon if everything is fine",
+      "parentUuid": "9bdfaf12_74b974a4",
+      "range": {
+        "startLine": 31,
+        "startChar": 34,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "a1cc972510988dd65624964549f9208370d01d54",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
