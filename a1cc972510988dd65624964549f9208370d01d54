@@ -63,6 +63,30 @@
       },
       "revId": "a1cc972510988dd65624964549f9208370d01d54",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6cf8929_342292b2",
+        "filename": "doze/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-01-27T10:34:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e73b1bf_8ee92cc7",
+      "range": {
+        "startLine": 31,
+        "startChar": 34,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "a1cc972510988dd65624964549f9208370d01d54",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
