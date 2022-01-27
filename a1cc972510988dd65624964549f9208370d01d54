@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b444ff0a_2ba83936",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-01-27T10:25:35Z",
+      "side": 1,
+      "message": "We just need to change the order of the commits so that https://review.lineageos.org/c/LineageOS/android_hardware_oneplus/+/318120/ comes first.",
+      "revId": "a1cc972510988dd65624964549f9208370d01d54",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bdfaf12_74b974a4",
