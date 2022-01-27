@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "263c6cb4_4f2b7b2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-01-27T11:18:34Z",
+      "side": 1,
+      "message": "By the way, it might be debatable whether icons fit new S style, but I decided to keep them.",
+      "revId": "33202028c07f57b7f010b5bf7e933c5dfaa1a11a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
