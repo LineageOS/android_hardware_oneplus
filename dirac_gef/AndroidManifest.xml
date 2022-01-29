@@ -13,7 +13,8 @@
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
 
-        <receiver android:name="org.lineageos.dirac.gef.BootCompletedReceiver">
+        <receiver android:name="org.lineageos.dirac.gef.BootCompletedReceiver"
+                  android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
