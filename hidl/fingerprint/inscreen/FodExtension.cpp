@@ -4,9 +4,14 @@
  */
 
 #include <compositionengine/FodExtension.h>
+#include <drm/sde_drm.h>
 
 uint32_t getFodZOrder(uint32_t z, bool touched) {
+#ifdef FOD_PRESSED_LAYER_ZORDER
+    return touched ? z | FOD_PRESSED_LAYER_ZORDER : z;
+#else
     return touched ? 0xfc8 : z;
+#endif
 }
 
 uint64_t getFodUsageBits(uint64_t usageBits, bool) {
