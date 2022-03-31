@@ -18,6 +18,7 @@ cc_binary {
     relative_install_path: "hw",
     srcs: [
         "BiometricsFingerprint.cpp",
+        "properties.cpp",
         "service.cpp",
     ],
 
