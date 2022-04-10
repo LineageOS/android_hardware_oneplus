@@ -16,7 +16,9 @@ import android.util.Log
 
 import java.util.concurrent.Executors
 
-class PickupSensor(private val context: Context, sensorType: String) : SensorEventListener {
+class PickupSensor(
+    private val context: Context, sensorType: String, private val sensorValue: Float
+) : SensorEventListener {
     private val powerManager = context.getSystemService(PowerManager::class.java)
     private val wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG)
 
@@ -33,7 +35,7 @@ class PickupSensor(private val context: Context, sensorType: String) : SensorEve
             return
         }
         entryTimestamp = SystemClock.elapsedRealtime()
-        if (event.values[0] == 1.0f) {
+        if (event.values[0] == sensorValue) {
             if (Utils.isPickUpSetToWake(context)) {
                 wakeLock.acquire(WAKELOCK_TIMEOUT_MS)
                 powerManager.wakeUpWithProximityCheck(
