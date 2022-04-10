@@ -13,6 +13,8 @@ import android.content.IntentFilter
 import android.hardware.input.InputManager
 import android.media.AudioManager
 import android.media.AudioSystem
+import android.os.PowerManager
+import android.os.SystemClock
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
@@ -26,7 +28,10 @@ class KeyHandler(context: Context) : DeviceKeyHandler {
     private val audioManager = context.getSystemService(AudioManager::class.java)
     private val inputManager = context.getSystemService(InputManager::class.java)
     private val notificationManager = context.getSystemService(NotificationManager::class.java)
+    private val powerManager = context.getSystemService(PowerManager::class.java)
     private val vibrator = context.getSystemService(Vibrator::class.java)
+
+    private val wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG)
 
     private val packageContext = context.createPackageContext(
         KeyHandler::class.java.getPackage()!!.name, 0
@@ -56,21 +61,11 @@ class KeyHandler(context: Context) : DeviceKeyHandler {
     }
 
     override fun handleKeyEvent(event: KeyEvent): KeyEvent? {
-        if (event.action != KeyEvent.ACTION_DOWN) {
-            return event
+        return when (inputManager.getInputDevice(event.deviceId).name) {
+            "oplus,hall_tri_state_key" -> handleTriStateKey(event)
+            "touchpanel" -> handleTouchpanel(event)
+            else -> event
         }
-
-        if (inputManager.getInputDevice(event.deviceId).name != "oplus,hall_tri_state_key") {
-            return event
-        }
-
-        when (File("/proc/tristatekey/tri_state").readText().trim()) {
-            "1" -> handleMode(POSITION_TOP)
-            "2" -> handleMode(POSITION_MIDDLE)
-            "3" -> handleMode(POSITION_BOTTOM)
-        }
-
-        return null
     }
 
     private fun vibrateIfNeeded(mode: Int) {
@@ -78,6 +73,40 @@ class KeyHandler(context: Context) : DeviceKeyHandler {
             AudioManager.RINGER_MODE_VIBRATE -> vibrator.vibrate(MODE_VIBRATION_EFFECT)
             AudioManager.RINGER_MODE_NORMAL -> vibrator.vibrate(MODE_NORMAL_EFFECT)
         }
+    }
+
+    private fun handleTriStateKey(event: KeyEvent): KeyEvent? {
+        if (event.action != KeyEvent.ACTION_DOWN) {
+            return event
+        }
+        when (File("/proc/tristatekey/tri_state").readText().trim()) {
+            "1" -> handleMode(POSITION_TOP)
+            "2" -> handleMode(POSITION_MIDDLE)
+            "3" -> handleMode(POSITION_BOTTOM)
+        }
+        return null
+    }
+
+    private fun handleTouchpanel(event: KeyEvent): KeyEvent? {
+        if (event.keyCode != KeyEvent.KEYCODE_F4) {
+            return event
+        }
+        val gestureId =
+                File("/proc/touchpanel/coordinate").readText().split(',').first().toIntOrNull()
+        if (gestureId == null || gestureId == 0) {
+            return event
+        }
+        if (gestureId == 1 /* DOU_TAP */) {
+            wakeLock.acquire(300)
+            powerManager.wakeUpWithProximityCheck(
+                SystemClock.uptimeMillis(), PowerManager.WAKE_REASON_GESTURE, TAG
+            )
+            return null
+        }
+        return KeyEvent(
+            event.downTime, event.eventTime, event.action, event.keyCode, event.repeatCount,
+            event.metaState, event.deviceId, 1337 + gestureId, event.flags, event.source
+        )
     }
 
     private fun handleMode(position: Int) {
