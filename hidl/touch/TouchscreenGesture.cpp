@@ -18,8 +18,6 @@
 
 #include <touch/oneplus/TouchscreenGesture.h>
 #include "touch/oneplus/TouchscreenGestureConfig.h"
-#include <android-base/logging.h>
-#include <fstream>
 
 namespace vendor {
 namespace lineage {
@@ -31,9 +29,7 @@ Return<void> TouchscreenGesture::getSupportedGestures(getSupportedGestures_cb re
     std::vector<Gesture> gestures;
 
     for (const auto& entry : kGestureInfoMap) {
-        if (access(entry.second.path, F_OK) != -1) {
-            gestures.push_back({entry.first, entry.second.name, entry.second.keycode});
-        }
+        gestures.push_back({entry.first, entry.second.name, entry.second.keycode});
     }
     resultCb(gestures);
 
@@ -41,16 +37,8 @@ Return<void> TouchscreenGesture::getSupportedGestures(getSupportedGestures_cb re
 }
 
 Return<bool> TouchscreenGesture::setGestureEnabled(
-    const ::vendor::lineage::touch::V1_0::Gesture& gesture, bool enabled) {
-    const auto entry = kGestureInfoMap.find(gesture.id);
-    if (entry == kGestureInfoMap.end()) {
-        return false;
-    }
-
-    std::ofstream file(entry->second.path);
-    file << (enabled ? "1" : "0");
-    LOG(DEBUG) << "Wrote file " << entry->second.path << " fail " << file.fail();
-    return !file.fail();
+    const ::vendor::lineage::touch::V1_0::Gesture& /*gesture*/, bool /*enabled*/) {
+    return true;
 }
 
 }  // namespace implementation

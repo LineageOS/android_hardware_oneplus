@@ -41,7 +41,6 @@ class TouchscreenGesture : public ITouchscreenGesture {
     typedef struct {
         int32_t keycode;
         const char* name;
-        const char* path;
     } GestureInfo;
 };
 
