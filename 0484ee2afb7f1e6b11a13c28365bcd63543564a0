@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eac1abb_6ffcb5c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 27025
+      },
+      "writtenOn": "2022-05-19T20:16:59Z",
+      "side": 1,
+      "message": "fixes panel not turning on in some cases on 7t/pro",
+      "revId": "0484ee2afb7f1e6b11a13c28365bcd63543564a0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
