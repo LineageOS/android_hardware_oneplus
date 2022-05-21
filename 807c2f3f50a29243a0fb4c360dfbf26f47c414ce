@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "739409ee_c1ab2452",
+        "filename": "sensors/Sensor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-05-21T08:57:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be customizable?",
+      "range": {
+        "startLine": 245,
+        "startChar": 20,
+        "endLine": 245,
+        "endChar": 76
+      },
+      "revId": "807c2f3f50a29243a0fb4c360dfbf26f47c414ce",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
