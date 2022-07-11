@@ -1,4 +1,4 @@
-ifeq ($(BOARD_VENDOR),oneplus)
+ifneq ($(filter $(call my-dir),$(PRODUCT_SOONG_NAMESPACES)),)
 
 include $(call all-subdir-makefiles)
 
