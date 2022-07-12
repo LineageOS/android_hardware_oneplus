@@ -13,9 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+soong_config_module_type {
+    name: "oneplus_lineage_touch_hal_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "ONEPLUS_LINEAGE_TOUCH_HAL",
+    value_variables: ["INCLUDE_DIR"],
+    properties: ["include_dirs"],
+}
+
+oneplus_lineage_touch_hal_cc_defaults {
+    name: "oneplus_lineage_touch_hal_defaults",
+    soong_config_variables: {
+        INCLUDE_DIR: {
+            include_dirs: ["%s"],
+        },
+    },
+}
+
 cc_defaults {
     name: "oneplus_touch_hal_defaults",
-    defaults: ["hidl_defaults"],
+    defaults: [
+        "hidl_defaults",
+        "oneplus_lineage_touch_hal_defaults",
+    ],
     relative_install_path: "hw",
     srcs: [
         "service.cpp",
@@ -28,7 +48,6 @@ cc_defaults {
         "libutils",
         "vendor.lineage.touch@1.0",
     ],
-    local_include_dirs: ["include"],
 }
 
 cc_binary {
