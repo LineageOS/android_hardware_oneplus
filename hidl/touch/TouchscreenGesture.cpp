@@ -16,8 +16,8 @@
 
 #define LOG_TAG "TouchscreenGestureService"
 
-#include <touch/oneplus/TouchscreenGesture.h>
-#include "touch/oneplus/TouchscreenGestureConfig.h"
+#include <TouchscreenGesture.h>
+#include <TouchscreenGestureConfig.h>
 #include <android-base/logging.h>
 #include <fstream>
 
