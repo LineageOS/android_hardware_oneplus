@@ -16,6 +16,7 @@ import android.media.AudioManager
 import android.media.AudioSystem
 import android.os.IBinder
 import android.os.UEventObserver
+import android.os.VibrationAttributes
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
@@ -88,8 +89,14 @@ class KeyHandler : Service() {
 
     private fun vibrateIfNeeded(mode: Int) {
         when (mode) {
-            AudioManager.RINGER_MODE_VIBRATE -> vibrator.vibrate(MODE_VIBRATION_EFFECT)
-            AudioManager.RINGER_MODE_NORMAL -> vibrator.vibrate(MODE_NORMAL_EFFECT)
+            AudioManager.RINGER_MODE_VIBRATE -> vibrator.vibrate(
+                MODE_VIBRATION_EFFECT,
+                HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES
+            )
+            AudioManager.RINGER_MODE_NORMAL -> vibrator.vibrate(
+                MODE_NORMAL_EFFECT,
+                HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES
+            )
         }
     }
 
@@ -161,6 +168,10 @@ class KeyHandler : Service() {
         private const val ZEN_PRIORITY_ONLY = 3
         private const val ZEN_TOTAL_SILENCE = 4
         private const val ZEN_ALARMS_ONLY = 5
+
+        // Vibration attributes
+        private val HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES =
+            VibrationAttributes.createForUsage(VibrationAttributes.USAGE_HARDWARE_FEEDBACK)
 
         // Vibration effects
         private val MODE_NORMAL_EFFECT = VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK)
