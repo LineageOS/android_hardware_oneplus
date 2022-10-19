@@ -19,10 +19,8 @@ import android.os.UEventObserver
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
-import android.view.KeyEvent
 import androidx.preference.PreferenceManager
 
-import java.lang.Thread
 import java.util.concurrent.Executors
 
 class KeyHandler : Service() {
