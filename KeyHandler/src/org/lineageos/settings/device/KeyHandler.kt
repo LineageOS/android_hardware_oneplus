@@ -71,9 +71,9 @@ class KeyHandler : Service() {
     }
 
     override fun onCreate() {
-        audioManager = getSystemService(AudioManager::class.java)
-        notificationManager = getSystemService(NotificationManager::class.java)
-        vibrator = getSystemService(Vibrator::class.java)
+        audioManager = getSystemService(AudioManager::class.java)!!
+        notificationManager = getSystemService(NotificationManager::class.java)!!
+        vibrator = getSystemService(Vibrator::class.java)!!
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         registerReceiver(
