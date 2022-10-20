@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f457932_559c8a12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31945
+      },
+      "writtenOn": "2022-10-20T19:01:12Z",
+      "side": 1,
+      "message": "This option is useful for devices with faulty slider button that randomly gets triggered or for someone who just wants to use the slider for something other than switching modes.",
+      "revId": "640cc6e8dacefa47ccb7434083883e4c1cd63eb0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
