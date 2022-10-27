@@ -88,6 +88,24 @@
       "parentUuid": "142fc531_a749976b",
       "revId": "e96885ab5cdcaf99d3657bcf83f9b30e977c09cb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd22cdad_03ae81a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-27T11:16:48Z",
+      "side": 1,
+      "message": "(assuming OnePlus\u0027s HIDL interface is common for all devices)",
+      "parentUuid": "142fc531_a749976b",
+      "revId": "e96885ab5cdcaf99d3657bcf83f9b30e977c09cb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
