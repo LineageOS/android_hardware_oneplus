@@ -52,6 +52,24 @@
       "parentUuid": "d8c573d6_f2979904",
       "revId": "e96885ab5cdcaf99d3657bcf83f9b30e977c09cb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "142fc531_a749976b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-27T11:15:37Z",
+      "side": 1,
+      "message": "Drop this commit, drop the prebuilt and import IFAAService it in hardware/oneplus (you can decompile it with jadx or apktool)",
+      "parentUuid": "07e7def3_41435e3c",
+      "revId": "e96885ab5cdcaf99d3657bcf83f9b30e977c09cb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
