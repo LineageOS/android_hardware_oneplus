@@ -70,6 +70,24 @@
       "parentUuid": "07e7def3_41435e3c",
       "revId": "e96885ab5cdcaf99d3657bcf83f9b30e977c09cb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "296d9c78_c79f6aa3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-27T11:16:43Z",
+      "side": 1,
+      "message": "But prebuilt should still work, right?",
+      "parentUuid": "142fc531_a749976b",
+      "revId": "e96885ab5cdcaf99d3657bcf83f9b30e977c09cb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
