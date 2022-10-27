@@ -35,11 +35,4 @@ public abstract class IFAAManager {
      * 获取IFAAManager接口定义版本，目前为1
      */
     public abstract int getVersion();
-
-    /**
-     * load so to communicate from REE to TEE
-     */
-    static {
-        System.loadLibrary("teeclientjni");//teeclientjni for TA test binary //ifaateeclient
-    }
 }
