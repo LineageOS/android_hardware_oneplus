@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2021 The LineageOS Project
+    SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="alert_slider_category_title">Alarmskyder</string>
+    <string name="alert_slider_selection_dialog_title">Handling</string>
+    <string name="alert_slider_top_position">Øverste position</string>
+    <string name="alert_slider_middle_position">Midter-position</string>
+    <string name="alert_slider_bottom_position">Nederste position</string>
+    <string name="alert_slider_mode_none">Ingen</string>
+    <string name="alert_slider_mode_silent">Lydløs</string>
+    <string name="alert_slider_mode_normal">Normal</string>
+    <string name="alert_slider_mode_vibration">Vibration</string>
+    <string name="alert_slider_mode_dnd_priority_only">Kun prioriterede</string>
+    <string name="alert_slider_mode_dnd_total_silence">Total stilhed</string>
+    <string name="alert_slider_mode_dnd_alarms_only">Kun alarmer</string>
+    <string name="alert_slider_mute_media_title">Lydløs medier</string>
+    <string name="alert_slider_mute_media_summary">Gør medier lydløse, når du skifter til lydløs</string>
+</resources>
