@@ -35,12 +35,6 @@ filegroup {
     srcs: ["TouchscreenGesture.cpp"],
 }
 
-cc_library_headers {
-    name: "vendor.lineage.touch@1.0-oneplus-headers",
-    vendor_available: true,
-    export_include_dirs: ["include"],
-}
-
 cc_binary {
     name: "vendor.lineage.touch@1.0-service.oneplus",
     defaults: [
@@ -61,8 +55,5 @@ cc_binary {
         "libhidlbase",
         "libutils",
         "vendor.lineage.touch@1.0",
-    ],
-    header_libs: [
-        "vendor.lineage.touch@1.0-oneplus-headers",
     ],
 }
