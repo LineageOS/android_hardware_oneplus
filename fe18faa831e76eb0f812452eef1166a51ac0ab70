@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c884ac0_ef738497",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5911
+      },
+      "writtenOn": "2024-02-09T07:13:14Z",
+      "side": 1,
+      "message": "are you sure you want to import v4 and use it on such old devices? i suspect that will either need deletion of quite a few hints and/or kernel backports",
+      "revId": "fe18faa831e76eb0f812452eef1166a51ac0ab70",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
