@@ -16,6 +16,24 @@
       "message": "are you sure you want to import v4 and use it on such old devices? i suspect that will either need deletion of quite a few hints and/or kernel backports",
       "revId": "fe18faa831e76eb0f812452eef1166a51ac0ab70",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a627bf7_90bc9292",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 16779
+      },
+      "writtenOn": "2024-02-09T09:56:03Z",
+      "side": 1,
+      "message": "I\u0027m using it on sdm845 with kernel 4.19, works fine",
+      "parentUuid": "2c884ac0_ef738497",
+      "revId": "fe18faa831e76eb0f812452eef1166a51ac0ab70",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
