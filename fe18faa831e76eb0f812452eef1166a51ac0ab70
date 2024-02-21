@@ -70,6 +70,24 @@
       "parentUuid": "5a627bf7_90bc9292",
       "revId": "fe18faa831e76eb0f812452eef1166a51ac0ab70",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "248268af_5096c89c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 16779
+      },
+      "writtenOn": "2024-02-21T12:58:43Z",
+      "side": 1,
+      "message": "The config I\u0027m using works, I don\u0027t care if it\u0027s \"ancient\" tbh\n\nAlso pushed these here just for picking, we aren\u0027t shipping kernel 4.19 on sdm845 anytime soon",
+      "parentUuid": "2d951a51_075aaf93",
+      "revId": "fe18faa831e76eb0f812452eef1166a51ac0ab70",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
