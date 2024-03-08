@@ -29,7 +29,7 @@
         android:key="doze_enable"
         android:title="@string/ambient_display_enable_title" />
 
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:key="always_on_display"
         android:disableDependentsState="true"
         android:title="@string/ambient_display_always_on_title"
@@ -55,7 +55,7 @@
         android:key="proximity_sensor"
         android:title="@string/proximity_sensor_title">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="gesture_pocket"
             android:defaultValue="false"
             android:icon="@drawable/ic_pocket"
