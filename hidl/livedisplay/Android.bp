@@ -32,7 +32,16 @@ cc_binary {
     name: "vendor.lineage.livedisplay@2.1-service.oneplus",
     defaults: ["hidl_defaults"],
     init_rc: ["vendor.lineage.livedisplay@2.1-service.oneplus.rc"],
-    vintf_fragments: ["vendor.lineage.livedisplay@2.1-service.oneplus.xml"],
+    vintf_fragments: select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_AF"), {
+        "false": [],
+        default: ["vendor.lineage.livedisplay@2.1-service.oneplus-af.xml"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_PA"), {
+        "false": [],
+        default: ["vendor.lineage.livedisplay@2.1-service.oneplus-pa.xml"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_SE"), {
+        "false": [],
+        default: ["vendor.lineage.livedisplay@2.1-service.oneplus-se.xml"],
+    }),
     relative_install_path: "hw",
     srcs: [
         ":vendor.lineage.livedisplay@2.0-sdm-pa",
@@ -53,5 +62,15 @@ cc_binary {
         "vendor.lineage.livedisplay@2.0-sdm-headers",
         "vendor.lineage.livedisplay@2.1-oneplus-headers",
     ],
+    cflags: select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_AF"), {
+        "false": ["-DENABLE_AF=false"],
+        default: ["-DENABLE_AF=true"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_PA"), {
+        "false": ["-DENABLE_PA=false"],
+        default: ["-DENABLE_PA=true"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_SE"), {
+        "false": ["-DENABLE_SE=false"],
+        default: ["-DENABLE_SE=true"],
+    }),
     proprietary: true,
 }
