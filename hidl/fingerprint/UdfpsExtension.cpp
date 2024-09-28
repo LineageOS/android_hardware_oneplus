@@ -11,6 +11,10 @@
 #include <drm/sde_drm.h>
 #endif
 
+uint32_t getUdfpsDimZOrder(uint32_t z) {
+    return z;
+}
+
 uint32_t getUdfpsZOrder(uint32_t z, bool touched) {
 #ifdef FOD_PRESSED_LAYER_ZORDER
     return touched ? z | FOD_PRESSED_LAYER_ZORDER : z;
