@@ -13,23 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-soong_config_module_type {
-    name: "oneplus_lineage_touch_hal_cc_defaults",
-    module_type: "cc_defaults",
-    config_namespace: "ONEPLUS_LINEAGE_TOUCH_HAL",
-    value_variables: ["INCLUDE_DIR"],
-    properties: ["include_dirs"],
-}
-
-oneplus_lineage_touch_hal_cc_defaults {
-    name: "oneplus_lineage_touch_hal_defaults",
-    soong_config_variables: {
-        INCLUDE_DIR: {
-            include_dirs: ["%s"],
-        },
-    },
-}
-
 filegroup {
     name: "vendor.lineage.touch@1.0-oneplus-touchgesture",
     srcs: ["TouchscreenGesture.cpp"],
@@ -43,10 +26,7 @@ cc_library_headers {
 
 cc_binary {
     name: "vendor.lineage.touch@1.0-service.oneplus",
-    defaults: [
-        "hidl_defaults",
-        "oneplus_lineage_touch_hal_defaults",
-    ],
+    defaults: ["hidl_defaults"],
     init_rc: ["vendor.lineage.touch@1.0-service.oneplus.rc"],
     vintf_fragments: ["vendor.lineage.touch@1.0-service.oneplus.xml"],
     vendor: true,
@@ -65,4 +45,8 @@ cc_binary {
     header_libs: [
         "vendor.lineage.touch@1.0-oneplus-headers",
     ],
+    include_dirs: select(soong_config_variable("ONEPLUS_LINEAGE_TOUCH_HAL", "INCLUDE_DIR"), {
+        any @ flag_val: [flag_val],
+        default: [],
+    }),
 }
