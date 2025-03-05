@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4213cb16_c66d2548",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28798
+      },
+      "writtenOn": "2025-03-05T21:22:41Z",
+      "side": 1,
+      "message": "Tested on Oneplus N10 (billie) with same issue",
+      "revId": "4e8c98807822043bc7157f9fc61a958512542638",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
