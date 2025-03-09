@@ -284,7 +284,16 @@ const char* BiometricsFingerprint::getModuleId() {
     std::ifstream file("/sys/devices/platform/soc/soc:fingerprint_detect/sensor_version");
     file >> sensor_version;
     ALOGI("fp sensor version is: 0x%x", sensor_version);
-    return sensor_version == 0x9638 ? "goodix.g6.fod" : "goodix.fod";
+    switch (sensor_version) {
+        case 0x9638:
+            return "goodix.g6.fod";
+        case 0x520:
+            return "fingerprint.egis";
+        case 0x521:
+            return "fingerprint.egis.et";
+        default:
+            return "goodix.fod";
+    }
 }
 
 fingerprint_device_t* BiometricsFingerprint::openHal() {
