@@ -1,0 +1,77 @@
+//
+// SPDX-FileCopyrightText: 2019-2025 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+filegroup {
+    name: "vendor.lineage.livedisplay-oneplus-af",
+    srcs: ["AntiFlicker.cpp"],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay-oneplus-dm",
+    srcs: ["DisplayModes.cpp"],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay-oneplus-se",
+    srcs: ["SunlightEnhancement.cpp"],
+}
+
+cc_library_headers {
+    name: "vendor.lineage.livedisplay-oneplus-headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
+}
+
+cc_binary {
+    name: "vendor.lineage.livedisplay-service.oneplus",
+    init_rc: ["vendor.lineage.livedisplay-service.oneplus.rc"],
+    vintf_fragments: select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_AF"), {
+        "false": [],
+        default: ["vendor.lineage.livedisplay-service.oneplus-af.xml"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_DM"), {
+        "true": ["vendor.lineage.livedisplay-service.oneplus-dm.xml"],
+        default: [],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_PA"), {
+        "false": [],
+        default: ["vendor.lineage.livedisplay-service.oneplus-pa.xml"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_SE"), {
+        "false": [],
+        default: ["vendor.lineage.livedisplay-service.oneplus-se.xml"],
+    }),
+    relative_install_path: "hw",
+    srcs: [
+        ":vendor.lineage.livedisplay-sdm-pa",
+        ":vendor.lineage.livedisplay-sdm-utils",
+        ":vendor.lineage.livedisplay-oneplus-af",
+        ":vendor.lineage.livedisplay-oneplus-dm",
+        ":vendor.lineage.livedisplay-oneplus-se",
+        "service.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "libbinder",
+        "libutils",
+        "vendor.lineage.livedisplay-V1-ndk",
+    ],
+    header_libs: [
+        "vendor.lineage.livedisplay-sdm-headers",
+        "vendor.lineage.livedisplay-oneplus-headers",
+    ],
+    cflags: select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_AF"), {
+        "false": ["-DENABLE_AF=false"],
+        default: ["-DENABLE_AF=true"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_DM"), {
+        "true": ["-DENABLE_DM=true"],
+        default: ["-DENABLE_DM=false"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_PA"), {
+        "false": ["-DENABLE_PA=false"],
+        default: ["-DENABLE_PA=true"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_SE"), {
+        "false": ["-DENABLE_SE=false"],
+        default: ["-DENABLE_SE=true"],
+    }),
+    proprietary: true,
+}
