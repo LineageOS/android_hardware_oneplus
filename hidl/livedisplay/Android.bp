@@ -18,6 +18,11 @@ filegroup {
 }
 
 filegroup {
+    name: "vendor.lineage.livedisplay@2.1-oneplus-dm",
+    srcs: ["DisplayModes.cpp"],
+}
+
+filegroup {
     name: "vendor.lineage.livedisplay@2.1-oneplus-se",
     srcs: ["SunlightEnhancement.cpp"],
 }
@@ -35,6 +40,9 @@ cc_binary {
     vintf_fragments: select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_AF"), {
         "false": [],
         default: ["vendor.lineage.livedisplay@2.1-service.oneplus-af.xml"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_DM"), {
+        "true": ["vendor.lineage.livedisplay@2.1-service.oneplus-dm.xml"],
+        default: [],
     }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_PA"), {
         "false": [],
         default: ["vendor.lineage.livedisplay@2.1-service.oneplus-pa.xml"],
@@ -47,6 +55,7 @@ cc_binary {
         ":vendor.lineage.livedisplay@2.0-sdm-pa",
         ":vendor.lineage.livedisplay@2.0-sdm-utils",
         ":vendor.lineage.livedisplay@2.1-oneplus-af",
+        ":vendor.lineage.livedisplay@2.1-oneplus-dm",
         ":vendor.lineage.livedisplay@2.1-oneplus-se",
         "service.cpp",
     ],
@@ -65,6 +74,9 @@ cc_binary {
     cflags: select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_AF"), {
         "false": ["-DENABLE_AF=false"],
         default: ["-DENABLE_AF=true"],
+    }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_DM"), {
+        "true": ["-DENABLE_DM=true"],
+        default: ["-DENABLE_DM=false"],
     }) + select(soong_config_variable("ONEPLUS_LINEAGE_LIVEDISPLAY_HAL", "ENABLE_PA"), {
         "false": ["-DENABLE_PA=false"],
         default: ["-DENABLE_PA=true"],
