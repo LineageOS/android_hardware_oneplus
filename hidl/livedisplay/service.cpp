@@ -55,8 +55,8 @@ int main() {
 
     status = af->registerAsService();
     if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL AntiFlicker Iface ("
-                   << status << ")";
+        LOG(ERROR) << "Could not register service for LiveDisplay HAL AntiFlicker Iface (" << status
+                   << ")";
         goto shutdown;
     }
 

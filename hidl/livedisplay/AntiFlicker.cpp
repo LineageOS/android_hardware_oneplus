@@ -16,8 +16,8 @@
 
 #define LOG_TAG "AntiFlickerService"
 
-#include <livedisplay/oneplus/AntiFlicker.h>
 #include <android-base/logging.h>
+#include <livedisplay/oneplus/AntiFlicker.h>
 #include <fstream>
 
 namespace vendor {
@@ -26,8 +26,7 @@ namespace livedisplay {
 namespace V2_1 {
 namespace implementation {
 
-static constexpr const char* kDcDimmingPath =
-    "/sys/class/drm/card0-DSI-1/dimlayer_bl_en";
+static constexpr const char* kDcDimmingPath = "/sys/class/drm/card0-DSI-1/dimlayer_bl_en";
 
 Return<bool> AntiFlicker::isEnabled() {
     std::ifstream file(kDcDimmingPath);

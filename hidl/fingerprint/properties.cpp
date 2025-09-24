@@ -22,9 +22,9 @@
 #include <dlfcn.h>
 #include <string.h>
 
-extern "C" int property_get(const char *key, char *value, const char *default_value) {
-    static auto property_get_orig = reinterpret_cast<typeof(property_get) *>(
-            dlsym(RTLD_NEXT, "property_get"));
+extern "C" int property_get(const char* key, char* value, const char* default_value) {
+    static auto property_get_orig =
+            reinterpret_cast<typeof(property_get)*>(dlsym(RTLD_NEXT, "property_get"));
 
     if (strcmp(key, "vendor.boot.verifiedbootstate") == 0) {
         ALOGV("Returning orange for vendor.boot.verifiedbootstate");

@@ -16,8 +16,8 @@
 
 #define LOG_TAG "SunlightEnhancementService"
 
-#include <livedisplay/oneplus/SunlightEnhancement.h>
 #include <android-base/logging.h>
+#include <livedisplay/oneplus/SunlightEnhancement.h>
 #include <fstream>
 
 namespace vendor {
@@ -26,8 +26,7 @@ namespace livedisplay {
 namespace V2_1 {
 namespace implementation {
 
-static constexpr const char* kHbmPath =
-    "/sys/class/drm/card0-DSI-1/hbm";
+static constexpr const char* kHbmPath = "/sys/class/drm/card0-DSI-1/hbm";
 
 Return<bool> SunlightEnhancement::isEnabled() {
     std::ifstream file(kHbmPath);
