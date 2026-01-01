@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2021 The LineageOS Project
+    SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="alert_slider_selection_dialog_title">Atzione</string>
+    <string name="alert_slider_top_position">Positzione superiore</string>
+    <string name="alert_slider_middle_position">Positzione tzentrale</string>
+    <string name="alert_slider_bottom_position">Positzione inferiore</string>
+    <string name="alert_slider_mode_none">Nissunu</string>
+    <string name="alert_slider_mode_silent">A sa muda</string>
+    <string name="alert_slider_mode_normal">Normale</string>
+    <string name="alert_slider_mode_vibration">Vibratzione</string>
+    <string name="alert_slider_mode_dnd_priority_only">Prioridade isceti</string>
+    <string name="alert_slider_mode_dnd_total_silence">Silèntziu totale</string>
+    <string name="alert_slider_mode_dnd_alarms_only">Isvèllias isceti</string>
+    <string name="alert_slider_mute_media_title">Pone is cuntenutos multimediales a sa muda</string>
+    <string name="alert_slider_mute_media_summary">Pone is cuntenutos multimediales a sa muda cando passas a silèntziu</string>
+</resources>
