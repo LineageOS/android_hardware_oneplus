@@ -5,7 +5,6 @@
 
 package org.lineageos.settings.doze
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -13,10 +12,11 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.CompoundButton
 import androidx.preference.*
-
 import com.android.settingslib.widget.MainSwitchPreference
 
-class DozeSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener,
+class DozeSettingsFragment :
+    PreferenceFragmentCompat(),
+    Preference.OnPreferenceChangeListener,
     CompoundButton.OnCheckedChangeListener {
     private lateinit var alwaysOnDisplayPreference: SwitchPreference
     private lateinit var switchBar: MainSwitchPreference
@@ -102,5 +102,4 @@ class DozeSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreference
         pickUpPreference?.isEnabled = isChecked
         pocketPreference?.isEnabled = isChecked
     }
-
 }

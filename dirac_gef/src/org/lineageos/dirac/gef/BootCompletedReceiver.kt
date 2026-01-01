@@ -22,13 +22,10 @@ import android.content.Intent
 import android.media.audiofx.AudioEffect
 import android.util.Log
 import com.android.internal.util.HexDump
-
 import java.util.UUID
 
 class BootCompletedReceiver : BroadcastReceiver() {
-    private val audioEffect = AudioEffect(
-        AudioEffect.EFFECT_TYPE_NULL, EFFECT_TYPE_DIRAC_GEF, 0, 0
-    )
+    private val audioEffect = AudioEffect(AudioEffect.EFFECT_TYPE_NULL, EFFECT_TYPE_DIRAC_GEF, 0, 0)
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d(TAG, "Starting")
@@ -36,7 +33,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
             val (param, value) = it.split("|")
             audioEffect.setParameter(
                 HexDump.hexStringToByteArray(param),
-                HexDump.hexStringToByteArray(value)
+                HexDump.hexStringToByteArray(value),
             )
         }
         audioEffect.enabled = true
