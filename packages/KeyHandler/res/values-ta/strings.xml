@@ -4,7 +4,18 @@
     SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <string name="alert_slider_top_position">முதற் நிலை</string>
-    <string name="alert_slider_middle_position">நடு நிலை</string>
+    <string name="alert_slider_category_title">விழிப்பூட்டி நகர்த்தி</string>
+    <string name="alert_slider_selection_dialog_title">செயற்பாடு</string>
+    <string name="alert_slider_top_position">மேல் நிலை</string>
+    <string name="alert_slider_middle_position">இடை நிலை</string>
     <string name="alert_slider_bottom_position">கீழ் நிலை</string>
+    <string name="alert_slider_mode_none">இல்லை</string>
+    <string name="alert_slider_mode_silent">ஒலியின்மை</string>
+    <string name="alert_slider_mode_normal">இயல்பு</string>
+    <string name="alert_slider_mode_vibration">அதிர்வு</string>
+    <string name="alert_slider_mode_dnd_priority_only">முன்னுரிமை மட்டும்</string>
+    <string name="alert_slider_mode_dnd_total_silence">முழு ஒலியின்மை</string>
+    <string name="alert_slider_mode_dnd_alarms_only">அலறுமணி மட்டும்</string>
+    <string name="alert_slider_mute_media_title">ஊடக ஒலியை முடக்குக</string>
+    <string name="alert_slider_mute_media_summary">ஒலியின்மையின்போது, ஊடக ஒலியை முடக்குக</string>
 </resources>
