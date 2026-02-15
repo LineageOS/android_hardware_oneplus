@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4afaf719_c4fd07a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33857
+      },
+      "writtenOn": "2026-02-15T20:20:07Z",
+      "side": 1,
+      "message": "This works on OnePlus 6T with 4.19 kernel",
+      "revId": "c2521472614c358a1b38d9831e437337029616f8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
