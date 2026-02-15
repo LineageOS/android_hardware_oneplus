@@ -96,6 +96,7 @@ class KeyHandler : Service() {
 
     private fun handleMode(position: Int) {
         val muteMedia = sharedPreferences.getBoolean(MUTE_MEDIA_WITH_SILENT, false)
+        val showDialog = sharedPreferences.getBoolean(SHOW_DIALOG, true)
 
         val mode =
             when (position) {
@@ -135,6 +136,9 @@ class KeyHandler : Service() {
                     }
                 }
             }
+            if (showDialog) {
+                sendNotification(position, mode)
+            }
             vibrateIfNeeded(mode)
         }
     }
@@ -149,25 +153,38 @@ class KeyHandler : Service() {
         }
     }
 
+    private fun sendNotification(position: Int, mode: Int) {
+        sendBroadcast(
+            Intent(CHANGED_ACTION).apply {
+                putExtra("position", position)
+                putExtra("mode", mode)
+            }
+        )
+    }
+
     companion object {
         private const val TAG = "KeyHandler"
 
+        // Intent actions
+        const val CHANGED_ACTION = "org.lineageos.settings.UPDATE_SETTINGS"
+
         // Slider key positions
-        private const val POSITION_TOP = 1
-        private const val POSITION_MIDDLE = 2
-        private const val POSITION_BOTTOM = 3
+        const val POSITION_TOP = 1
+        const val POSITION_MIDDLE = 2
+        const val POSITION_BOTTOM = 3
 
         // Preference keys
         private const val ALERT_SLIDER_TOP_KEY = "config_top_position"
         private const val ALERT_SLIDER_MIDDLE_KEY = "config_middle_position"
         private const val ALERT_SLIDER_BOTTOM_KEY = "config_bottom_position"
         private const val MUTE_MEDIA_WITH_SILENT = "config_mute_media"
+        private const val SHOW_DIALOG = "config_show_dialog"
 
         // ZEN constants
         private const val ZEN_OFFSET = 2
-        private const val ZEN_PRIORITY_ONLY = 3
-        private const val ZEN_TOTAL_SILENCE = 4
-        private const val ZEN_ALARMS_ONLY = 5
+        const val ZEN_PRIORITY_ONLY = 3
+        const val ZEN_TOTAL_SILENCE = 4
+        const val ZEN_ALARMS_ONLY = 5
 
         // Vibration attributes
         private val HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES =
