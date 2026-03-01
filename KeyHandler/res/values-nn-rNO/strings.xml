@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2021 The LineageOS Project
+    SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="alert_slider_category_title">Varselbrytar</string>
+    <string name="alert_slider_selection_dialog_title">Handling</string>
+    <string name="alert_slider_top_position">Øvste stilling</string>
+    <string name="alert_slider_middle_position">Midtstilling</string>
+    <string name="alert_slider_bottom_position">Nedste stilling</string>
+    <string name="alert_slider_mode_none">Ingen</string>
+    <string name="alert_slider_mode_silent">Lydlaus</string>
+    <string name="alert_slider_mode_normal">Normal</string>
+    <string name="alert_slider_mode_vibration">Vibrering</string>
+    <string name="alert_slider_mode_dnd_priority_only">Berre prioriterte</string>
+    <string name="alert_slider_mode_dnd_total_silence">Heilt lydlaus</string>
+    <string name="alert_slider_mode_dnd_alarms_only">Berre alarmar</string>
+    <string name="alert_slider_mute_media_title">Dempa mediar</string>
+    <string name="alert_slider_mute_media_summary">Dempa mediar når du slår på lydlaus</string>
+</resources>
