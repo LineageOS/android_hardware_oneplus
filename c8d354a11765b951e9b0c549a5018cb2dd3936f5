@@ -16,6 +16,23 @@
       "message": "Tested on OnePlus 6T with 4.19 kernel developed by EdwinMoq, works well.",
       "revId": "c8d354a11765b951e9b0c549a5018cb2dd3936f5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57518f72_ac44df96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33857
+      },
+      "writtenOn": "2026-03-01T18:10:21Z",
+      "side": 1,
+      "message": "-2 for now, test in hw/oplus",
+      "revId": "c8d354a11765b951e9b0c549a5018cb2dd3936f5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
