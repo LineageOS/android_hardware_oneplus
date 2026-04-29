@@ -34,6 +34,23 @@
       "parentUuid": "d5a0cdb5_51b697b9",
       "revId": "313f1f4cd8a505f7bba3d57d30c6fac228b391c5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f48bf09_807d3d67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36976
+      },
+      "writtenOn": "2026-04-29T15:07:06Z",
+      "side": 1,
+      "message": "verified on OnePlus 6T fajita",
+      "revId": "313f1f4cd8a505f7bba3d57d30c6fac228b391c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
