@@ -51,6 +51,24 @@
       "message": "verified on OnePlus 6T fajita",
       "revId": "313f1f4cd8a505f7bba3d57d30c6fac228b391c5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89382b29_2060cd22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 36976
+      },
+      "writtenOn": "2026-04-29T15:30:33Z",
+      "side": 1,
+      "message": "\u003e If so, you can verify it.\nthanks. Frst time I\u0027m using Gerrit. I thought it would be self-explanatory, I wouldn\u0027t submit anything untested ofc.\n\nI test every patchset on device before I push.",
+      "parentUuid": "2c3d6850_25e83485",
+      "revId": "313f1f4cd8a505f7bba3d57d30c6fac228b391c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": [
