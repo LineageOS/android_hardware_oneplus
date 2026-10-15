@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <functional>
 #include <vector>
 
 #include "ST.h"
@@ -43,6 +44,8 @@ class FaceEngine {
 
     // The ST license is bound to the stock app, which the SDK identifies by the process cmdline.
     static void setCmdline(char* cmdline, size_t size);
+    // Runs fn while the stock app's cmdline is presented.
+    static bool withStockCmdline(const std::function<bool()>& fn);
 
     bool init();
 

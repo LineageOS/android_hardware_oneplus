@@ -1,5 +1,6 @@
 on post-fs-data
     mkdir /data/vendor/face 0700 system system
+    mkdir /data/vendor/face/st_auth 0700 system system
     mkdir /data/vendor/misc 01771 system system
     mkdir /data/vendor/misc/qsee 0770 system system
     mkdir /data/vendor/misc/qsee/face 0770 system system

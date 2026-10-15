@@ -184,10 +184,7 @@ bool FaceEngine::loadSymbols() {
     return ok;
 }
 
-bool FaceEngine::init() {
-    if (mVerify) return true;
-    if (!mLib && !loadSymbols()) return false;
-
+bool FaceEngine::withStockCmdline(const std::function<bool()>& fn) {
     if (!sCmdline || sCmdlineSize <= strlen(kCmdline)) {
         LOG(ERROR) << "Unable to present cmdline";
         return false;
@@ -195,9 +192,15 @@ bool FaceEngine::init() {
     std::string saved(sCmdline, sCmdlineSize);
     memset(sCmdline, 0, sCmdlineSize);
     strcpy(sCmdline, kCmdline);
-    bool ret = initLocked();
+    bool ret = fn();
     memcpy(sCmdline, saved.data(), sCmdlineSize);
     return ret;
+}
+
+bool FaceEngine::init() {
+    if (mVerify) return true;
+    if (!mLib && !loadSymbols()) return false;
+    return withStockCmdline([this] { return initLocked(); });
 }
 
 bool FaceEngine::initLocked() {
