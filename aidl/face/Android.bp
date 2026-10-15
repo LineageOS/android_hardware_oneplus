@@ -10,6 +10,8 @@ cc_binary {
     vendor: true,
     relative_install_path: "hw",
     srcs: [
+        "AuthEngine.cpp",
+        "AuthTee.cpp",
         "CameraSource.cpp",
         "Face.cpp",
         "FaceEngine.cpp",
@@ -26,6 +28,7 @@ cc_binary {
         "libbinder_ndk",
         "libcamera2ndk_vendor",
         "libdl",
+        "libion",
         "liblog",
         "libmediandk",
         "libnativewindow",

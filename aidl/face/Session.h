@@ -14,6 +14,7 @@
 #include <mutex>
 #include <set>
 
+#include "AuthEngine.h"
 #include "CameraSource.h"
 #include "FaceEngine.h"
 #include "FaceTee.h"
@@ -29,6 +30,8 @@ struct Hardware {
     std::mutex lock;
     FaceEngine engine;
     FaceTee tee;
+    // Used instead of the above when the resources ship the st_auth SDK.
+    AuthEngine auth;
     CameraSource camera;
 };
 
@@ -38,6 +41,8 @@ struct Enrollment {
     int32_t enrollmentId = 0;
     int64_t authenticatorId = 0;
     bool requireAttention = true;
+    // The engine the template was made with.
+    std::string engine;
 
     static Enrollment load();
     bool save() const;
@@ -98,6 +103,10 @@ class Session : public BnSession {
     void doEnroll(const keymaster::HardwareAuthToken& hat, ANativeWindow* preview,
                   const std::future<void>& cancel);
     void doAuthenticate(const std::future<void>& cancel);
+    void doEnrollAuth(Enrollment enrollment, ANativeWindow* preview,
+                      const std::future<void>& cancel);
+    void doAuthenticateAuth(const Enrollment& enrollment, const std::future<void>& cancel);
+    std::string engineName();
     bool prepare();
     void onAuthenticationFailedLocked();
     bool checkLockoutLocked();

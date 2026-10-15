@@ -25,6 +25,7 @@ namespace {
 
 constexpr const char* kEnrollmentFile = "/data/vendor/face/enrollment";
 constexpr const char* kFeatureFile = "/data/vendor/face/feature";
+constexpr const char* kCvEngine = "cv";
 
 // The faceapp trusted app stores the template in the TEE. When disabled, the template is kept in
 // /data and matched in-process, mirroring the stock app's non-TEE mode.
@@ -100,19 +101,22 @@ Enrollment Enrollment::load() {
     std::string content;
     if (!::android::base::ReadFileToString(kEnrollmentFile, &content)) return e;
 
+    // Enrollments made before the st_auth SDK was supported lack the engine field.
     auto fields = ::android::base::Split(::android::base::Trim(content), " ");
-    if (fields.size() != 4) return e;
+    if (fields.size() != 4 && fields.size() != 5) return e;
     e.userId = std::stoi(fields[0]);
     e.enrollmentId = std::stoi(fields[1]);
     e.authenticatorId = std::stoll(fields[2]);
     e.requireAttention = fields[3] == "1";
+    e.engine = fields.size() == 5 ? fields[4] : kCvEngine;
     return e;
 }
 
 bool Enrollment::save() const {
     if (userId < 0) return unlink(kEnrollmentFile) == 0 || errno == ENOENT;
     std::string content = std::to_string(userId) + " " + std::to_string(enrollmentId) + " " +
-                          std::to_string(authenticatorId) + " " + (requireAttention ? "1" : "0");
+                          std::to_string(authenticatorId) + " " + (requireAttention ? "1" : "0") +
+                          " " + engine;
     return ::android::base::WriteStringToFile(content, kEnrollmentFile);
 }
 
@@ -130,7 +134,18 @@ std::shared_ptr<common::ICancellationSignal> Session::schedule(
     return ndk::SharedRefBase::make<CancellationSignal>(std::move(promise));
 }
 
+std::string Session::engineName() {
+    return mHw->auth.available() ? mHw->auth.name() : kCvEngine;
+}
+
 bool Session::prepare() {
+    if (mHw->auth.available()) {
+        if (!mHw->auth.init()) {
+            mCb->onError(Error::HW_UNAVAILABLE, 0);
+            return false;
+        }
+        return true;
+    }
     if (!mHw->engine.init() || (useTee() && !mHw->tee.open())) {
         mCb->onError(Error::HW_UNAVAILABLE, 0);
         return false;
@@ -160,6 +175,7 @@ bool Session::storeFeature(const std::vector<uint8_t>& feature, const std::vecto
 }
 
 bool Session::removeFeature() {
+    if (mHw->auth.available()) return mHw->auth.removeTemplate();
     if (!useTee()) return unlink(kFeatureFile) == 0 || errno == ENOENT;
 
     FaceTee& tee = mHw->tee;
@@ -242,6 +258,10 @@ void Session::doEnroll(const keymaster::HardwareAuthToken& hat, ANativeWindow* p
         return;
     }
     if (!prepare()) return;
+    if (mHw->auth.available()) {
+        doEnrollAuth(enrollment, preview, cancel);
+        return;
+    }
 
     CameraSource& camera = mHw->camera;
     if (!camera.start(preview)) {
@@ -321,6 +341,7 @@ void Session::doEnroll(const keymaster::HardwareAuthToken& hat, ANativeWindow* p
     enrollment.userId = mUserId;
     enrollment.enrollmentId = enrollmentId;
     enrollment.authenticatorId = randomId();
+    enrollment.engine = kCvEngine;
     if (!enrollment.save()) {
         PLOG(ERROR) << "Failed to save enrollment";
         removeFeature();
@@ -374,6 +395,16 @@ void Session::doAuthenticate(const std::future<void>& cancel) {
         return;
     }
     if (checkLockoutLocked() || !prepare()) return;
+    if (enrollment.engine != engineName()) {
+        LOG(ERROR) << "Face was enrolled with " << enrollment.engine << ", but " << engineName()
+                   << " is in use";
+        mCb->onError(Error::REENROLL_REQUIRED, 0);
+        return;
+    }
+    if (mHw->auth.available()) {
+        doAuthenticateAuth(enrollment, cancel);
+        return;
+    }
 
     CameraSource& camera = mHw->camera;
     if (!camera.start(nullptr)) {
@@ -433,6 +464,139 @@ void Session::doAuthenticate(const std::future<void>& cancel) {
         sLockouts.erase(mUserId);
         // Convenience sensors must not mint auth tokens.
         mCb->onAuthenticationSucceeded(enrollment.enrollmentId, keymaster::HardwareAuthToken());
+    } else if (cancelled()) {
+        mCb->onError(Error::CANCELED, 0);
+    } else if (compared) {
+        onAuthenticationFailedLocked();
+    } else {
+        mCb->onError(Error::TIMEOUT, 0);
+    }
+}
+
+void Session::doEnrollAuth(Enrollment enrollment, ANativeWindow* preview,
+                           const std::future<void>& cancel) {
+    AuthEngine& auth = mHw->auth;
+    CameraSource& camera = mHw->camera;
+    if (!camera.start(preview)) {
+        mCb->onError(Error::HW_UNAVAILABLE, 0);
+        return;
+    }
+    if (auto error = auth.beginEnroll(faceOrientation(camera.sensorOrientation()))) {
+        camera.stop();
+        mCb->onError(*error, 0);
+        return;
+    }
+
+    int32_t enrollmentId = static_cast<int32_t>(randomId() & INT32_MAX);
+    auto deadline = std::chrono::steady_clock::now() + kEnrollTimeout;
+    auto cancelled = [&] { return shouldCancel(cancel); };
+
+    std::vector<uint8_t> nv21;
+    std::optional<Error> error;
+    bool done = false;
+    int lastRemaining = AuthEngine::kEnrollFrames;
+    AcquiredInfo lastInfo = AcquiredInfo::UNKNOWN;
+    bool first = true;
+
+    while (camera.nextFrame(&nv21, deadline, cancelled)) {
+        if (first) {
+            mCb->onEnrollmentFrame(enrollFrame(AcquiredInfo::FIRST_FRAME_RECEIVED,
+                                               EnrollmentStage::FIRST_FRAME_RECEIVED));
+            first = false;
+        }
+
+        Frame frame = {nv21.data(), CameraSource::kWidth, CameraSource::kHeight};
+        AuthEngine::Result result = auth.enroll(frame);
+        if (result.error) {
+            error = result.error;
+            break;
+        }
+        if (result.info != lastInfo) {
+            mCb->onEnrollmentFrame(enrollFrame(result.info, EnrollmentStage::HOLD_STILL_IN_CENTER));
+            lastInfo = result.info;
+        }
+        if (result.done) {
+            done = true;
+            break;
+        }
+        if (result.remaining > 0 && result.remaining != lastRemaining) {
+            mCb->onEnrollmentProgress(enrollmentId, result.remaining);
+            lastRemaining = result.remaining;
+        }
+    }
+    camera.stop();
+
+    if (!done) {
+        // Drop partially collected frames.
+        auth.removeTemplate();
+        if (!error) error = cancelled() ? Error::CANCELED : Error::TIMEOUT;
+        mCb->onError(*error, 0);
+        return;
+    }
+
+    enrollment.userId = mUserId;
+    enrollment.enrollmentId = enrollmentId;
+    enrollment.authenticatorId = randomId();
+    enrollment.engine = auth.name();
+    if (!enrollment.save()) {
+        PLOG(ERROR) << "Failed to save enrollment";
+        auth.removeTemplate();
+        mCb->onError(Error::UNABLE_TO_PROCESS, 0);
+        return;
+    }
+
+    mCb->onEnrollmentFrame(enrollFrame(AcquiredInfo::GOOD, EnrollmentStage::ENROLLMENT_FINISHED));
+    mCb->onEnrollmentProgress(enrollmentId, 0);
+}
+
+void Session::doAuthenticateAuth(const Enrollment& enrollment, const std::future<void>& cancel) {
+    AuthEngine& auth = mHw->auth;
+    CameraSource& camera = mHw->camera;
+    if (!camera.start(nullptr)) {
+        mCb->onError(Error::HW_UNAVAILABLE, 0);
+        return;
+    }
+    if (auto error = auth.beginAuthenticate(faceOrientation(camera.sensorOrientation()),
+                                            enrollment.requireAttention)) {
+        camera.stop();
+        mCb->onError(*error, 0);
+        return;
+    }
+
+    auto deadline = std::chrono::steady_clock::now() + kAuthTimeout;
+    auto cancelled = [&] { return shouldCancel(cancel); };
+
+    std::vector<uint8_t> nv21;
+    std::optional<Error> error;
+    bool compared = false;
+    bool matched = false;
+    AcquiredInfo lastInfo = AcquiredInfo::UNKNOWN;
+
+    while (camera.nextFrame(&nv21, deadline, cancelled)) {
+        Frame frame = {nv21.data(), CameraSource::kWidth, CameraSource::kHeight};
+        AuthEngine::Result result = auth.authenticate(frame);
+        if (result.error) {
+            error = result.error;
+            break;
+        }
+        if (result.info != lastInfo) {
+            mCb->onAuthenticationFrame(authFrame(result.info));
+            lastInfo = result.info;
+        }
+        compared |= result.compared;
+        if (result.done) {
+            matched = true;
+            break;
+        }
+    }
+    camera.stop();
+
+    if (matched) {
+        sLockouts.erase(mUserId);
+        // Convenience sensors must not mint auth tokens.
+        mCb->onAuthenticationSucceeded(enrollment.enrollmentId, keymaster::HardwareAuthToken());
+    } else if (error) {
+        mCb->onError(*error, 0);
     } else if (cancelled()) {
         mCb->onError(Error::CANCELED, 0);
     } else if (compared) {
