@@ -18,15 +18,54 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <vector>
 
 namespace aidl::android::hardware::biometrics::face {
 
 namespace {
 
-constexpr const char* kAppPath = "/vendor/firmware_mnt/image";
+// faceapp lives in /vendor/etc/faceunlock on sm8150/sm8250/sm8350, or the firmware partition on sdm845.
+constexpr const char* kAppPaths[] = {"/vendor/etc/faceunlock", "/vendor/firmware_mnt/image"};
 constexpr const char* kAppName = "faceapp";
 constexpr uint32_t kSharedBufferSize = 0xc8000;
-constexpr unsigned int kQseecomHeapMask = 1u << 27;
+
+constexpr int kMaxHeapName = 32;
+struct IonHeapData {
+    char name[kMaxHeapName];
+    uint32_t type;
+    uint32_t heap_id;
+    uint32_t reserved0, reserved1, reserved2;
+};
+
+// The qseecom heap id varies by platform, so resolve it by name instead of hardcoding the bit;
+// struct ion_heap_data isn't in the legacy ion/ion.h, so it is declared locally above.
+unsigned int qseecomHeapMask() {
+    static const unsigned int mask = [] {
+        constexpr unsigned int kLegacyMask = 1u << 27;
+        int fd = ion_open();
+        if (fd < 0) return kLegacyMask;
+
+        unsigned int found = 0;
+        int count = 0;
+        if (ion_query_heap_cnt(fd, &count) == 0 && count > 0) {
+            std::vector<IonHeapData> heaps(count);
+            if (ion_query_get_heaps(fd, count, heaps.data()) == 0) {
+                for (const char* name : {"qsecom_ta", "qsecom"}) {
+                    for (const IonHeapData& heap : heaps) {
+                        if (strncmp(heap.name, name, kMaxHeapName) == 0) {
+                            found = 1u << heap.heap_id;
+                            break;
+                        }
+                    }
+                    if (found) break;
+                }
+            }
+        }
+        ion_close(fd);
+        return found ? found : kLegacyMask;
+    }();
+    return mask;
+}
 
 struct QSEECom_handle {
     uint8_t* ion_sbuffer;
@@ -71,7 +110,7 @@ class IonBuffer {
         mLen = len;
         mSize = (len + 0xfff) & ~size_t(0xfff);
         if ((mIon = ion_open()) < 0 ||
-            ion_alloc_fd(mIon, mSize, 0, kQseecomHeapMask, 0, &mFd) != 0) {
+            ion_alloc_fd(mIon, mSize, 0, qseecomHeapMask(), 0, &mFd) != 0) {
             LOG(ERROR) << "Failed to allocate " << mSize << " bytes of ION";
             mFd = -1;
             return false;
@@ -124,16 +163,20 @@ bool AuthTee::open() {
     if (sHandle) return true;
     if (!load()) return false;
 
-    // Loading the trusted app occasionally fails with a transient scm_call error.
+    // Loading the trusted app occasionally fails with a transient scm_call error, and the TA lives in
+    // a different directory depending on the device, so retry across both candidate paths.
     for (int attempt = 1; attempt <= 5; attempt++) {
-        QSEECom_handle* handle = nullptr;
-        int ret = sStartApp(&handle, kAppPath, kAppName, kSharedBufferSize);
-        if (ret == 0 && handle && handle->ion_sbuffer) {
-            sHandle = handle;
-            return true;
+        for (const char* path : kAppPaths) {
+            QSEECom_handle* handle = nullptr;
+            int ret = sStartApp(&handle, path, kAppName, kSharedBufferSize);
+            if (ret == 0 && handle && handle->ion_sbuffer) {
+                sHandle = handle;
+                return true;
+            }
+            LOG(WARNING) << "Failed to start " << kAppName << " from " << path << " (attempt "
+                         << attempt << "): " << ret;
+            if (handle) sShutdownApp(&handle);
         }
-        LOG(WARNING) << "Failed to start " << kAppName << " (attempt " << attempt << "): " << ret;
-        if (handle) sShutdownApp(&handle);
         usleep(50000);
     }
     return false;

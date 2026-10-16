@@ -26,8 +26,10 @@ using namespace st;
 namespace {
 
 constexpr const char* kResources = "/vendor/etc/faceunlock/resources.zip";
-constexpr const char* kLibrary = "lib/arm64-v8a/libstfaceunlockocl.so";
-constexpr const char* kLicense = "res/raw/st_license_3_1.lic";
+constexpr const char* kVendorLibraries[] = {"/vendor/lib64/libstfaceunlockocl.so",
+                                            "/odm/lib64/libstfaceunlockocl.so"};
+constexpr const char* kLibraryEntry = "lib/arm64-v8a/libstfaceunlockocl.so";
+constexpr const char* kLicenses[] = {"res/raw/st_license_3_2.lic", "res/raw/st_license_3_1.lic"};
 constexpr const char* kTemplateDir = "/data/vendor/face/st_auth";
 constexpr const char* kTeeTemplateDir = "/data/vendor/misc/qsee/face";
 constexpr const char* kFaceIdFile = "/data/vendor/face/st_auth_face_id";
@@ -46,6 +48,14 @@ bool readEntry(const char* name, std::string* out) {
     }
     CloseArchive(archive);
     return ok;
+}
+
+std::optional<std::string> engineLibraryPath() {
+    for (const char* lib : kVendorLibraries) {
+        if (access(lib, F_OK) == 0) return std::string(lib);
+    }
+    if (readEntry(kLibraryEntry, nullptr)) return std::string(kResources) + "!/" + kLibraryEntry;
+    return std::nullopt;
 }
 
 st_image_t toImage(const Frame& frame) {
@@ -103,7 +113,7 @@ AuthEngine::~AuthEngine() {
 }
 
 bool AuthEngine::available() {
-    if (!mAvailable) mAvailable = readEntry(kLibrary, nullptr);
+    if (!mAvailable) mAvailable = engineLibraryPath().has_value();
     return *mAvailable;
 }
 
@@ -114,10 +124,14 @@ std::string AuthEngine::name() const {
 bool AuthEngine::loadSymbols() {
     if (mLib) return true;
 
-    std::string path = std::string(kResources) + "!/" + kLibrary;
-    void* lib = dlopen(path.c_str(), RTLD_NOW);
+    auto path = engineLibraryPath();
+    if (!path) {
+        LOG(ERROR) << "Engine library not found";
+        return false;
+    }
+    void* lib = dlopen(path->c_str(), RTLD_NOW);
     if (!lib) {
-        LOG(ERROR) << "Failed to load " << kLibrary << ": " << dlerror();
+        LOG(ERROR) << "Failed to load " << *path << ": " << dlerror();
         return false;
     }
 
@@ -153,15 +167,16 @@ bool AuthEngine::init() {
 }
 
 bool AuthEngine::initLocked() {
+    int ret = -1;
     std::string license;
-    if (!readEntry(kLicense, &license)) {
-        LOG(ERROR) << "Missing " << kLicense;
-        return false;
+    for (const char* entry : kLicenses) {
+        if (!readEntry(entry, &license)) continue;
+        ret = initLicense(license.c_str());
+        if (ret == 0) break;
+        LOG(WARNING) << "License " << entry << " rejected: " << ret;
     }
-
-    int ret = initLicense(license.c_str());
     if (ret != 0) {
-        LOG(ERROR) << "License rejected: " << ret;
+        LOG(ERROR) << "No usable st_auth license";
         return false;
     }
 
